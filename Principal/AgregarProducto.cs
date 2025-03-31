@@ -40,7 +40,7 @@ namespace Principal
         private void btnGuardarProducto_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtNombre.Text) || string.IsNullOrEmpty(txtDescripcion.Text) ||
-                string.IsNullOrEmpty(txtPrecio.Text) || string.IsNullOrEmpty(txtCantidad.Text) ||
+                string.IsNullOrEmpty(txtPrecio.Text) || 
                 string.IsNullOrEmpty(imagenRuta))
             {
                 MessageBox.Show("Por favor, completa todos los campos y selecciona una imagen.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -62,13 +62,11 @@ namespace Principal
             string nombre = txtNombre.Text;
             string descripcion = txtDescripcion.Text;
             decimal precio = Convert.ToDecimal(txtPrecio.Text);
-            int cantidad = Convert.ToInt32(txtCantidad.Text);
-            int existencia = cantidad;  // Puedes modificar esto si la existencia es diferente
-            string imagenUrl = rutaDestino;  // Guardamos la ruta de la imagen
-
+            int existencia = Convert.ToInt32(txtExistencia.Text); // Solo se usa 'existencia'
+            string imagenUrl = rutaDestino;  // Ruta de la imagen
             // Guardar en la base de datos
             BaseDatos bd = new BaseDatos();
-            int resultado = bd.GuardarProducto(nombre, descripcion, imagenUrl, existencia, precio, cantidad);
+            int resultado = bd.GuardarProducto(nombre, descripcion, imagenUrl, existencia, precio);
 
             if (resultado > 0)
             {

@@ -99,12 +99,12 @@ namespace Modelo
         }
 
         // Método para guardar un producto
-        public int GuardarProducto(string nombre, string descripcion, string imagenUrl, int existencia, decimal precio, int cantidad)
+        public int GuardarProducto(string nombre, string descripcion, string imagenUrl, int existencia, decimal precio)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "INSERT INTO producto (nombre, descripcion, imagen_url, existencia, precio, cantidad) VALUES (@nombre, @descripcion, @imagenUrl, @existencia, @precio, @cantidad)";
+                string query = "INSERT INTO producto (nombre, descripcion, imagen_url, existencia, precio) VALUES (@nombre, @descripcion, @imagenUrl, @existencia, @precio)";
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@nombre", nombre);
@@ -112,7 +112,6 @@ namespace Modelo
                     cmd.Parameters.AddWithValue("@imagenUrl", imagenUrl);
                     cmd.Parameters.AddWithValue("@existencia", existencia);
                     cmd.Parameters.AddWithValue("@precio", precio);
-                    cmd.Parameters.AddWithValue("@cantidad", cantidad);
                     return cmd.ExecuteNonQuery();
                 }
             }

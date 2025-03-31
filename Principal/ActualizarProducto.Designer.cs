@@ -31,13 +31,11 @@
             toolStrip1 = new ToolStrip();
             toolStripLabel1 = new ToolStripLabel();
             label7 = new Label();
-            btnActuaizarImagen = new Button();
+            btnActualizarImagen = new Button();
             pbAgregarProducto = new PictureBox();
             label6 = new Label();
-            label5 = new Label();
             lbExistencia = new TextBox();
             label4 = new Label();
-            txtCantidad = new TextBox();
             label3 = new Label();
             txtPrecio = new TextBox();
             label2 = new Label();
@@ -45,6 +43,8 @@
             txtDescripcion = new TextBox();
             txtNombre = new TextBox();
             btnActualizarProducto = new Button();
+            txtID = new TextBox();
+            lbid = new Label();
             toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbAgregarProducto).BeginInit();
             SuspendLayout();
@@ -58,7 +58,7 @@
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(1114, 42);
             toolStrip1.TabIndex = 0;
-            toolStrip1.Text = "toolStrip1";          
+            toolStrip1.Text = "toolStrip1";
             // 
             // toolStripLabel1
             // 
@@ -79,21 +79,22 @@
             label7.TabIndex = 29;
             label7.Text = "Actualizar Producto";
             // 
-            // btnActuaizarImagen
+            // btnActualizarImagen
             // 
-            btnActuaizarImagen.BackColor = Color.Navy;
-            btnActuaizarImagen.Font = new Font("Arial", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnActuaizarImagen.ForeColor = SystemColors.ButtonFace;
-            btnActuaizarImagen.Location = new Point(271, 455);
-            btnActuaizarImagen.Name = "btnActuaizarImagen";
-            btnActuaizarImagen.Size = new Size(151, 33);
-            btnActuaizarImagen.TabIndex = 28;
-            btnActuaizarImagen.Text = "Actualizar Imagen";
-            btnActuaizarImagen.UseVisualStyleBackColor = false;
+            btnActualizarImagen.BackColor = Color.Navy;
+            btnActualizarImagen.Font = new Font("Arial", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnActualizarImagen.ForeColor = SystemColors.ButtonFace;
+            btnActualizarImagen.Location = new Point(275, 499);
+            btnActualizarImagen.Name = "btnActualizarImagen";
+            btnActualizarImagen.Size = new Size(151, 33);
+            btnActualizarImagen.TabIndex = 28;
+            btnActualizarImagen.Text = "Actualizar Imagen";
+            btnActualizarImagen.UseVisualStyleBackColor = false;
+            btnActualizarImagen.Click += btnActualizarImagen_Click_1;
             // 
             // pbAgregarProducto
             // 
-            pbAgregarProducto.Location = new Point(244, 307);
+            pbAgregarProducto.Location = new Point(244, 358);
             pbAgregarProducto.Name = "pbAgregarProducto";
             pbAgregarProducto.Size = new Size(217, 125);
             pbAgregarProducto.TabIndex = 27;
@@ -103,25 +104,15 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Arial", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.Location = new Point(143, 307);
+            label6.Location = new Point(143, 358);
             label6.Name = "label6";
             label6.Size = new Size(68, 21);
             label6.TabIndex = 26;
             label6.Text = "Imagen";
             // 
-            // label5
+            // lbExistencia
             // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Arial", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(665, 236);
-            label5.Name = "label5";
-            label5.Size = new Size(82, 21);
-            label5.TabIndex = 25;
-            label5.Text = "Cantidad";
-            // 
-            // txtExistencia
-            // 
-            lbExistencia.Location = new Point(787, 290);
+            lbExistencia.Location = new Point(787, 222);
             lbExistencia.Name = "lbExistencia";
             lbExistencia.Size = new Size(185, 27);
             lbExistencia.TabIndex = 24;
@@ -130,24 +121,17 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Arial", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(143, 236);
+            label4.Location = new Point(143, 296);
             label4.Name = "label4";
             label4.Size = new Size(61, 21);
             label4.TabIndex = 23;
             label4.Text = "Precio";
             // 
-            // txtCantidad
-            // 
-            txtCantidad.Location = new Point(787, 230);
-            txtCantidad.Name = "txtCantidad";
-            txtCantidad.Size = new Size(185, 27);
-            txtCantidad.TabIndex = 22;
-            // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Arial", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(665, 296);
+            label3.Location = new Point(665, 228);
             label3.Name = "label3";
             label3.Size = new Size(91, 21);
             label3.TabIndex = 21;
@@ -155,7 +139,7 @@
             // 
             // txtPrecio
             // 
-            txtPrecio.Location = new Point(244, 228);
+            txtPrecio.Location = new Point(244, 290);
             txtPrecio.Name = "txtPrecio";
             txtPrecio.Size = new Size(217, 27);
             txtPrecio.TabIndex = 20;
@@ -174,7 +158,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Arial", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(143, 163);
+            label1.Location = new Point(143, 242);
             label1.Name = "label1";
             label1.Size = new Size(73, 21);
             label1.TabIndex = 18;
@@ -189,7 +173,7 @@
             // 
             // txtNombre
             // 
-            txtNombre.Location = new Point(244, 159);
+            txtNombre.Location = new Point(244, 236);
             txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(217, 27);
             txtNombre.TabIndex = 16;
@@ -207,20 +191,37 @@
             btnActualizarProducto.UseVisualStyleBackColor = false;
             btnActualizarProducto.Click += btnActualizarProducto_Click;
             // 
+            // txtID
+            // 
+            txtID.Location = new Point(244, 165);
+            txtID.Name = "txtID";
+            txtID.Size = new Size(217, 27);
+            txtID.TabIndex = 32;
+            // 
+            // lbid
+            // 
+            lbid.AutoSize = true;
+            lbid.Font = new Font("Arial", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbid.Location = new Point(143, 171);
+            lbid.Name = "lbid";
+            lbid.Size = new Size(27, 21);
+            lbid.TabIndex = 31;
+            lbid.Text = "ID";
+            // 
             // ActualizarProducto
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1114, 646);
+            Controls.Add(txtID);
+            Controls.Add(lbid);
             Controls.Add(btnActualizarProducto);
             Controls.Add(label7);
-            Controls.Add(btnActuaizarImagen);
+            Controls.Add(btnActualizarImagen);
             Controls.Add(pbAgregarProducto);
             Controls.Add(label6);
-            Controls.Add(label5);
             Controls.Add(lbExistencia);
             Controls.Add(label4);
-            Controls.Add(txtCantidad);
             Controls.Add(label3);
             Controls.Add(txtPrecio);
             Controls.Add(label2);
@@ -242,13 +243,11 @@
         private ToolStrip toolStrip1;
         private ToolStripLabel toolStripLabel1;
         private Label label7;
-        private Button btnActuaizarImagen;
+        private Button btnActualizarImagen;
         private PictureBox pbAgregarProducto;
         private Label label6;
-        private Label label5;
         private TextBox lbExistencia;
         private Label label4;
-        private TextBox txtCantidad;
         private Label label3;
         private TextBox txtPrecio;
         private Label label2;
@@ -256,5 +255,7 @@
         private TextBox txtDescripcion;
         private TextBox txtNombre;
         private Button btnActualizarProducto;
+        private TextBox txtID;
+        private Label lbid;
     }
 }
