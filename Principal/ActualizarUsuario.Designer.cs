@@ -38,6 +38,7 @@
             txtNombre = new TextBox();
             cmbRoles = new ComboBox();
             label2 = new Label();
+            btnEliminarUsuario = new Button();
             toolStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -75,7 +76,7 @@
             btnActualizaUsuario.BackColor = Color.Navy;
             btnActualizaUsuario.Font = new Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnActualizaUsuario.ForeColor = SystemColors.ButtonFace;
-            btnActualizaUsuario.Location = new Point(277, 257);
+            btnActualizaUsuario.Location = new Point(369, 254);
             btnActualizaUsuario.Margin = new Padding(3, 2, 3, 2);
             btnActualizaUsuario.Name = "btnActualizaUsuario";
             btnActualizaUsuario.Size = new Size(145, 51);
@@ -140,11 +141,26 @@
             label2.TabIndex = 30;
             label2.Text = "Rol";
             // 
+            // btnEliminarUsuario
+            // 
+            btnEliminarUsuario.BackColor = Color.SteelBlue;
+            btnEliminarUsuario.Font = new Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnEliminarUsuario.ForeColor = SystemColors.ActiveCaptionText;
+            btnEliminarUsuario.Location = new Point(153, 255);
+            btnEliminarUsuario.Margin = new Padding(3, 2, 3, 2);
+            btnEliminarUsuario.Name = "btnEliminarUsuario";
+            btnEliminarUsuario.Size = new Size(162, 48);
+            btnEliminarUsuario.TabIndex = 64;
+            btnEliminarUsuario.Text = "Eliminar Usuario";
+            btnEliminarUsuario.UseVisualStyleBackColor = false;
+            btnEliminarUsuario.Click += btnEliminarUsuario_Click;
+            // 
             // ActualizarUsuario
             // 
             AutoScaleDimensions = new SizeF(7F, 16F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(681, 379);
+            Controls.Add(btnEliminarUsuario);
             Controls.Add(label2);
             Controls.Add(cmbRoles);
             Controls.Add(btnActualizaUsuario);
@@ -175,5 +191,6 @@
         private TextBox txtNombre;
         private ComboBox cmbRoles;
         private Label label2;
+        private Button btnEliminarUsuario;
     }
 }

@@ -68,6 +68,22 @@ namespace Modelo
             }
         }
 
+        // Método para eliminar un usuario por ID
+        public int EliminarUsuario(int idUsuario)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "DELETE FROM usuario WHERE id_usuario = @idUsuario";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
+                    return cmd.ExecuteNonQuery(); 
+                }
+            }
+        }
+
+
         // Método para obtener todos los productos
         public List<ProductoEntity> TraerProductos()
         {
@@ -183,5 +199,81 @@ namespace Modelo
             return roles;
         }
 
+        // Método para obtener todos los proveedores
+        public List<ProveedorEntity> TraerProveedores()
+        {
+            List<ProveedorEntity> listaProveedores = new List<ProveedorEntity>();
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT * FROM proveedor";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        listaProveedores.Add(new ProveedorEntity
+                        {
+                            Id_proveedor = reader.GetInt32("id_proveedor"),
+                            Nombre = reader.GetString("nombre"),
+                            Telefono = reader.IsDBNull(reader.GetOrdinal("telefono")) ? null : reader.GetString("telefono"),
+                            Direccion = reader.IsDBNull(reader.GetOrdinal("direccion")) ? null : reader.GetString("direccion")
+                        });
+                    }
+                }
+            }
+            return listaProveedores;
+        }
+
+        // Método para guardar un proveedor
+        public int GuardarProveedor(string nombre, string telefono, string direccion)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "INSERT INTO proveedor (nombre, telefono, direccion) VALUES (@nombre, @telefono, @direccion)";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@nombre", nombre);
+                    cmd.Parameters.AddWithValue("@telefono", telefono);
+                    cmd.Parameters.AddWithValue("@direccion", direccion);
+                    return cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // Método para actualizar un proveedor
+        public int ActualizarProveedor(int idProveedor, string nombre, string telefono, string direccion)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "UPDATE proveedor SET nombre = @nombre, telefono = @telefono, direccion = @direccion WHERE id_proveedor = @idProveedor";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@nombre", nombre);
+                    cmd.Parameters.AddWithValue("@telefono", telefono);
+                    cmd.Parameters.AddWithValue("@direccion", direccion);
+                    cmd.Parameters.AddWithValue("@idProveedor", idProveedor);
+                    return cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // Método para eliminar un proveedor
+        public int EliminarProveedor(int idProveedor)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "DELETE FROM proveedor WHERE id_proveedor = @idProveedor";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@idProveedor", idProveedor);
+                    return cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
