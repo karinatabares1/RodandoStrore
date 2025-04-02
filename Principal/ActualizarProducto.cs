@@ -104,7 +104,7 @@ namespace Principal
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         // Convertir la imagen en bytes usando un MemoryStream
-                        byte[] imageBytes;
+                        byte[] imageBytes; 
                         using (MemoryStream ms = new MemoryStream())
                         {
                             pbAgregarProducto.Image.Save(ms, pbAgregarProducto.Image.RawFormat);

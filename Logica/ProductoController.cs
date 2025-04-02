@@ -17,10 +17,10 @@ namespace Logica
             return productos;
         }
 
-        public string GuardarProducto(string nombre, string descripcion, string imagenUrl, int existencia, decimal precio, int cantidad)
+        public string GuardarProducto(string nombre, string descripcion, string imagenUrl, int existencia, decimal precio)
         {
             BaseDatos db = new BaseDatos();
-            int resultado = db.GuardarProducto(nombre, descripcion, imagenUrl, existencia, precio, cantidad);
+            int resultado = db.GuardarProducto(nombre, descripcion, imagenUrl, existencia, precio);
             if (resultado > 0)
             {
                 return "Producto guardado";
