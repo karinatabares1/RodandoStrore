@@ -45,7 +45,6 @@
             txtDescripcion = new TextBox();
             txtNombre = new TextBox();
             btnActualizarProducto = new Button();
-            label8 = new Label();
             toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbAgregarProducto).BeginInit();
             SuspendLayout();
@@ -216,21 +215,11 @@
             btnActualizarProducto.UseVisualStyleBackColor = false;
             btnActualizarProducto.Click += btnActualizarProducto_Click;
             // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new Point(678, 309);
-            label8.Name = "label8";
-            label8.Size = new Size(38, 15);
-            label8.TabIndex = 31;
-            label8.Text = "label8";
-            // 
             // ActualizarProducto
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(975, 484);
-            Controls.Add(label8);
             Controls.Add(btnActualizarProducto);
             Controls.Add(label7);
             Controls.Add(btnActuaizarImagen);
@@ -276,6 +265,5 @@
         private TextBox txtDescripcion;
         private TextBox txtNombre;
         private Button btnActualizarProducto;
-        private Label label8;
     }
 }
