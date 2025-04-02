@@ -40,6 +40,7 @@
             label1 = new Label();
             toolStrip1 = new ToolStrip();
             toolStripLabel1 = new ToolStripLabel();
+            btnEliminarProveedor = new Button();
             toolStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -86,7 +87,7 @@
             btnActualizarProveedor.BackColor = Color.Navy;
             btnActualizarProveedor.Font = new Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnActualizarProveedor.ForeColor = SystemColors.ButtonFace;
-            btnActualizarProveedor.Location = new Point(318, 219);
+            btnActualizarProveedor.Location = new Point(400, 246);
             btnActualizarProveedor.Margin = new Padding(3, 2, 3, 2);
             btnActualizarProveedor.Name = "btnActualizarProveedor";
             btnActualizarProveedor.Size = new Size(162, 48);
@@ -163,11 +164,26 @@
             toolStripLabel1.Size = new Size(254, 32);
             toolStripLabel1.Text = "RODANDO STORE";
             // 
+            // btnEliminarProveedor
+            // 
+            btnEliminarProveedor.BackColor = Color.SteelBlue;
+            btnEliminarProveedor.Font = new Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnEliminarProveedor.ForeColor = SystemColors.ActiveCaptionText;
+            btnEliminarProveedor.Location = new Point(205, 246);
+            btnEliminarProveedor.Margin = new Padding(3, 2, 3, 2);
+            btnEliminarProveedor.Name = "btnEliminarProveedor";
+            btnEliminarProveedor.Size = new Size(162, 48);
+            btnEliminarProveedor.TabIndex = 63;
+            btnEliminarProveedor.Text = "Eliminar Proveedor";
+            btnEliminarProveedor.UseVisualStyleBackColor = false;
+            btnEliminarProveedor.Click += btnEliminarProveedor_Click;
+            // 
             // ActualizarProveedor
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnEliminarProveedor);
             Controls.Add(txtTelefono);
             Controls.Add(label3);
             Controls.Add(txtDireccion);
@@ -201,5 +217,6 @@
         private Label label1;
         private ToolStrip toolStrip1;
         private ToolStripLabel toolStripLabel1;
+        private Button btnEliminarProveedor;
     }
 }

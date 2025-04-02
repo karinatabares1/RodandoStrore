@@ -1,21 +1,14 @@
-﻿using System;
+﻿using Modelo;
+using Modelo.Entities;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 namespace Principal
 {
     public partial class VerProveedor : Form
     {
-
-        private string connectionString = "server=localhost;database=rodandoStore;user=root;password=;";
-
         public VerProveedor()
         {
             InitializeComponent();
@@ -24,26 +17,28 @@ namespace Principal
 
         private void CargarProveedores()
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            try
             {
-                try
-                {
-                    conn.Open();
-                    string query = "SELECT id_proveedor, nombre, telefono, direccion FROM proveedor";
+                BaseDatos bd = new BaseDatos();
+                List<ProveedorEntity> listaProveedores = bd.TraerProveedores();
 
-                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn))
-                    {
-                        DataTable dt = new DataTable();
-                        adapter.Fill(dt);
-                        dgvProveedor.DataSource = dt;
-                    }
-                }
-                catch (Exception ex)
+                DataTable dt = new DataTable();
+                dt.Columns.Add("id_proveedor", typeof(int));
+                dt.Columns.Add("nombre", typeof(string));
+                dt.Columns.Add("telefono", typeof(string));
+                dt.Columns.Add("direccion", typeof(string));
+
+                foreach (ProveedorEntity proveedor in listaProveedores)
                 {
-                    MessageBox.Show("Error al cargar los proveedores: " + ex.Message);
+                    dt.Rows.Add(proveedor.Id_proveedor, proveedor.Nombre, proveedor.Telefono, proveedor.Direccion);
                 }
+
+                dgvProveedor.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los proveedores: " + ex.Message);
             }
         }
     }
 }
-

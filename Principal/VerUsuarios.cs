@@ -1,20 +1,14 @@
-﻿using System;
+﻿using Modelo;
+using Modelo.Entities;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 namespace Principal
 {
     public partial class VerUsuarios : Form
     {
-        private string connectionString = "server=localhost;database=rodandoStore;user=root;password=;";
-
         public VerUsuarios()
         {
             InitializeComponent();
@@ -23,24 +17,28 @@ namespace Principal
 
         private void CargarUsuarios()
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            try
             {
-                try
-                {
-                    conn.Open();
-                    string query = "SELECT usuario.id_usuario, usuario.nombre, rol.nombre AS rol FROM usuario INNER JOIN rol ON usuario.id_rol = rol.id_rol";
+                BaseDatos bd = new BaseDatos();
+                List<UsuarioEntity> usuarios = bd.TraerUsuarios();
+                Dictionary<int, string> roles = bd.ObtenerRoles();
 
-                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn))
-                    {
-                        DataTable dt = new DataTable();
-                        adapter.Fill(dt);
-                        dgvUsuarios.DataSource = dt;
-                    }
-                }
-                catch (Exception ex)
+                DataTable dt = new DataTable();
+                dt.Columns.Add("id_usuario", typeof(int));
+                dt.Columns.Add("nombre", typeof(string));
+                dt.Columns.Add("rol", typeof(string));
+
+                foreach (var usuario in usuarios)
                 {
-                    MessageBox.Show("Error al cargar los usuarios: " + ex.Message);
+                    string rolNombre = roles.ContainsKey(usuario.Id_rol) ? roles[usuario.Id_rol] : "Desconocido";
+                    dt.Rows.Add(usuario.Id_usuario, usuario.nombre, rolNombre);
                 }
+
+                dgvUsuarios.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los usuarios: " + ex.Message);
             }
         }
     }

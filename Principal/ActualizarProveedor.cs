@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Modelo;
+using System;
 using System.Windows.Forms;
-using Modelo;
-using MySql.Data.MySqlClient;
 
 namespace Principal
 {
     public partial class ActualizarProveedor : Form
     {
-        private int id_proveedor;
         public ActualizarProveedor()
         {
             InitializeComponent();
@@ -41,39 +32,67 @@ namespace Principal
             string telefono = txtTelefono.Text.Trim();
             string direccion = txtDireccion.Text.Trim();
 
-            using (MySqlConnection conn = new MySqlConnection("server=localhost;database=rodandoStore;user=root;password=;"))
+            try
+            {
+                BaseDatos bd = new BaseDatos();
+                int resultado = bd.ActualizarProveedor(idProveedor, nombre, telefono, direccion);
+                if (resultado > 0)
+                {
+                    MessageBox.Show("Proveedor actualizado correctamente.");
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("No se encontró el proveedor o los datos no han cambiado.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al actualizar: " + ex.Message);
+            }
+        }
+
+        private void btnEliminarProveedor_Click(object sender, EventArgs e)
+        {
+            int idProveedor;
+            if (!int.TryParse(txtID.Text, out idProveedor))
+            {
+                MessageBox.Show("El ID del proveedor debe ser un número válido para eliminar.");
+                return;
+            }
+
+            DialogResult confirmacion = MessageBox.Show(
+                $"¿Está seguro de que desea eliminar el proveedor con ID '{idProveedor}'?",
+                "Confirmar eliminación",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (confirmacion == DialogResult.Yes)
             {
                 try
                 {
-                    conn.Open();
-                    string query = "UPDATE proveedor SET nombre = @nombre, telefono = @telefono, direccion = @direccion WHERE id_proveedor = @id";
-
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    BaseDatos bd = new BaseDatos();
+                    int resultado = bd.EliminarProveedor(idProveedor);
+                    if (resultado > 0)
                     {
-                        cmd.Parameters.AddWithValue("@nombre", nombre);
-                        cmd.Parameters.AddWithValue("@telefono", telefono);
-                        cmd.Parameters.AddWithValue("@direccion", direccion);
-                        cmd.Parameters.AddWithValue("@id", idProveedor);
-
-                        int resultado = cmd.ExecuteNonQuery();
-                        if (resultado > 0)
-                        {
-                            MessageBox.Show("Proveedor actualizado correctamente.");
-                            this.Close();
-                        }
-                        else
-                        {
-                            MessageBox.Show("No se encontró el proveedor o los datos no han cambiado.");
-                        }
+                        MessageBox.Show("Proveedor eliminado correctamente.");
+                        // Opcional: Limpiar campos después de eliminar
+                        txtNombre.Clear();
+                        txtTelefono.Clear();
+                        txtDireccion.Clear();
+                        txtID.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se encontró un proveedor con ese ID.");
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error al actualizar: " + ex.Message);
+                    MessageBox.Show("Error al eliminar el proveedor: " + ex.Message);
                 }
             }
         }
-
     }
-}    
-
+}
