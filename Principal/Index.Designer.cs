@@ -103,46 +103,31 @@
             // 
             // pictureBox2
             // 
-<<<<<<< HEAD
-            pictureBox2.Location = new Point(16, 564);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(207, 99);
-            pictureBox2.TabIndex = 4;
-=======
             pictureBox2.Location = new Point(304, 423);
             pictureBox2.Margin = new Padding(3, 2, 3, 2);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(181, 74);
-            pictureBox2.TabIndex = 5;
->>>>>>> mariana
+            pictureBox2.TabIndex = 4;
             pictureBox2.TabStop = false;
             // 
             // pictureBox3
             // 
-<<<<<<< HEAD
-            pictureBox3.Location = new Point(347, 564);
+            pictureBox3.Location = new Point(304, 423);
+            pictureBox3.Margin = new Padding(3, 2, 3, 2);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(207, 99);
+            pictureBox3.Size = new Size(181, 74);
             pictureBox3.TabIndex = 5;
             pictureBox3.TabStop = false;
             // 
             // pictureBox4
             // 
-            pictureBox4.Location = new Point(673, 564);
+            pictureBox4.Location = new Point(589, 423);
+            pictureBox4.Margin = new Padding(3, 2, 3, 2);
             pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(207, 99);
+            pictureBox4.Size = new Size(181, 74);
             pictureBox4.TabIndex = 6;
             pictureBox4.TabStop = false;
             // 
-=======
-            pictureBox3.Location = new Point(589, 423);
-            pictureBox3.Margin = new Padding(3, 2, 3, 2);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(181, 74);
-            pictureBox3.TabIndex = 6;
-            pictureBox3.TabStop = false;
-            // 
->>>>>>> mariana
             // label2
             // 
             label2.AutoSize = true;

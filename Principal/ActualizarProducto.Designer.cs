@@ -81,22 +81,6 @@
             // 
             // btnActualizarImagen
             // 
-<<<<<<< HEAD
-            btnActualizarImagen.BackColor = Color.Navy;
-            btnActualizarImagen.Font = new Font("Arial", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnActualizarImagen.ForeColor = SystemColors.ButtonFace;
-            btnActualizarImagen.Location = new Point(275, 499);
-            btnActualizarImagen.Name = "btnActualizarImagen";
-            btnActualizarImagen.Size = new Size(151, 33);
-            btnActualizarImagen.TabIndex = 28;
-            btnActualizarImagen.Text = "Actualizar Imagen";
-            btnActualizarImagen.UseVisualStyleBackColor = false;
-            btnActualizarImagen.Click += btnActualizarImagen_Click_1;
-            // 
-            // pbAgregarProducto
-            // 
-            pbAgregarProducto.Location = new Point(244, 358);
-=======
             btnActuaizarImagen.BackColor = Color.Navy;
             btnActuaizarImagen.Font = new Font("Arial", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnActuaizarImagen.ForeColor = SystemColors.ButtonFace;
@@ -110,9 +94,7 @@
             // 
             // pbAgregarProducto
             // 
-            pbAgregarProducto.Location = new Point(214, 230);
-            pbAgregarProducto.Margin = new Padding(3, 2, 3, 2);
->>>>>>> mariana
+            pbAgregarProducto.Location = new Point(244, 307);
             pbAgregarProducto.Name = "pbAgregarProducto";
             pbAgregarProducto.Size = new Size(190, 94);
             pbAgregarProducto.TabIndex = 27;
@@ -122,11 +104,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Arial", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-<<<<<<< HEAD
-            label6.Location = new Point(143, 358);
-=======
-            label6.Location = new Point(125, 230);
->>>>>>> mariana
+            label6.Location = new Point(143, 307);
             label6.Name = "label6";
             label6.Size = new Size(56, 17);
             label6.TabIndex = 26;
@@ -134,22 +112,17 @@
             // 
             // lbExistencia
             // 
-<<<<<<< HEAD
-            lbExistencia.Location = new Point(787, 222);
-=======
             label5.AutoSize = true;
             label5.Font = new Font("Arial", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(582, 177);
+            label5.Location = new Point(665, 236);
             label5.Name = "label5";
-            label5.Size = new Size(66, 17);
+            label5.Size = new Size(82, 21);
             label5.TabIndex = 25;
             label5.Text = "Cantidad";
             // 
-            // lbExistencia
+            // txtExistencia
             // 
-            lbExistencia.Location = new Point(689, 218);
-            lbExistencia.Margin = new Padding(3, 2, 3, 2);
->>>>>>> mariana
+            lbExistencia.Location = new Point(787, 290);
             lbExistencia.Name = "lbExistencia";
             lbExistencia.Size = new Size(162, 23);
             lbExistencia.TabIndex = 24;
@@ -158,36 +131,24 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Arial", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-<<<<<<< HEAD
-            label4.Location = new Point(143, 296);
-=======
-            label4.Location = new Point(125, 177);
->>>>>>> mariana
+            label4.Location = new Point(143, 236);
             label4.Name = "label4";
             label4.Size = new Size(50, 17);
             label4.TabIndex = 23;
             label4.Text = "Precio";
             // 
-<<<<<<< HEAD
-=======
             // txtCantidad
             // 
-            txtCantidad.Location = new Point(689, 172);
-            txtCantidad.Margin = new Padding(3, 2, 3, 2);
+            txtCantidad.Location = new Point(787, 230);
             txtCantidad.Name = "txtCantidad";
-            txtCantidad.Size = new Size(162, 23);
+            txtCantidad.Size = new Size(185, 27);
             txtCantidad.TabIndex = 22;
             // 
->>>>>>> mariana
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Arial", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-<<<<<<< HEAD
-            label3.Location = new Point(665, 228);
-=======
-            label3.Location = new Point(582, 222);
->>>>>>> mariana
+            label3.Location = new Point(665, 296);
             label3.Name = "label3";
             label3.Size = new Size(75, 17);
             label3.TabIndex = 21;
@@ -195,12 +156,7 @@
             // 
             // txtPrecio
             // 
-<<<<<<< HEAD
-            txtPrecio.Location = new Point(244, 290);
-=======
-            txtPrecio.Location = new Point(214, 171);
-            txtPrecio.Margin = new Padding(3, 2, 3, 2);
->>>>>>> mariana
+            txtPrecio.Location = new Point(244, 228);
             txtPrecio.Name = "txtPrecio";
             txtPrecio.Size = new Size(190, 23);
             txtPrecio.TabIndex = 20;
@@ -219,11 +175,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Arial", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-<<<<<<< HEAD
-            label1.Location = new Point(143, 242);
-=======
-            label1.Location = new Point(125, 122);
->>>>>>> mariana
+            label1.Location = new Point(143, 163);
             label1.Name = "label1";
             label1.Size = new Size(60, 17);
             label1.TabIndex = 18;
@@ -239,12 +191,7 @@
             // 
             // txtNombre
             // 
-<<<<<<< HEAD
-            txtNombre.Location = new Point(244, 236);
-=======
-            txtNombre.Location = new Point(214, 119);
-            txtNombre.Margin = new Padding(3, 2, 3, 2);
->>>>>>> mariana
+            txtNombre.Location = new Point(244, 159);
             txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(190, 23);
             txtNombre.TabIndex = 16;
@@ -284,13 +231,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-<<<<<<< HEAD
             ClientSize = new Size(1114, 646);
-            Controls.Add(txtID);
-            Controls.Add(lbid);
-=======
-            ClientSize = new Size(975, 484);
->>>>>>> mariana
             Controls.Add(btnActualizarProducto);
             Controls.Add(label7);
             Controls.Add(btnActualizarImagen);
