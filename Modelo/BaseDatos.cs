@@ -78,7 +78,7 @@ namespace Modelo
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
-                    return cmd.ExecuteNonQuery(); 
+                    return cmd.ExecuteNonQuery();
                 }
             }
         }
@@ -199,7 +199,7 @@ namespace Modelo
             return roles;
         }
 
-        // Método para obtener todos los proveedores
+        // Método para obtener todos los proveedores (sin id_producto)
         public List<ProveedorEntity> TraerProveedores()
         {
             List<ProveedorEntity> listaProveedores = new List<ProveedorEntity>();
@@ -218,7 +218,8 @@ namespace Modelo
                             Id_proveedor = reader.GetInt32("id_proveedor"),
                             Nombre = reader.GetString("nombre"),
                             Telefono = reader.IsDBNull(reader.GetOrdinal("telefono")) ? null : reader.GetString("telefono"),
-                            Direccion = reader.IsDBNull(reader.GetOrdinal("direccion")) ? null : reader.GetString("direccion")
+                            Direccion = reader.IsDBNull(reader.GetOrdinal("direccion")) ? null : reader.GetString("direccion"),
+                            FechaRegistro = reader.GetDateTime("fecha_registro")
                         });
                     }
                 }
@@ -226,30 +227,31 @@ namespace Modelo
             return listaProveedores;
         }
 
-        // Método para guardar un proveedor
-        public int GuardarProveedor(string nombre, string telefono, string direccion)
+        // Método para guardar un proveedor (sin id_producto)
+        public int GuardarProveedor(string nombre, string telefono, string direccion, DateTime fecha)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "INSERT INTO proveedor (nombre, telefono, direccion) VALUES (@nombre, @telefono, @direccion)";
+                string query = "INSERT INTO proveedor (nombre, telefono, direccion) VALUES (@nombre, @telefono, @direccion, @fecha)";
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@nombre", nombre);
                     cmd.Parameters.AddWithValue("@telefono", telefono);
                     cmd.Parameters.AddWithValue("@direccion", direccion);
+                    cmd.Parameters.AddWithValue("@fecha", fecha);
                     return cmd.ExecuteNonQuery();
                 }
             }
         }
 
-        // Método para actualizar un proveedor
-        public int ActualizarProveedor(int idProveedor, string nombre, string telefono, string direccion)
+        // Método para actualizar un proveedor (sin id_producto)
+        public int ActualizarProveedor(int idProveedor, string nombre, string telefono, string direccion, DateTime fecha)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "UPDATE proveedor SET nombre = @nombre, telefono = @telefono, direccion = @direccion WHERE id_proveedor = @idProveedor";
+                string query = "UPDATE proveedor SET nombre = @nombre, telefono = @telefono, direccion = @direccion, fecha = @fecha WHERE id_proveedor = @idProveedor";
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@nombre", nombre);
@@ -271,6 +273,22 @@ namespace Modelo
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@idProveedor", idProveedor);
+                    return cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // Método para asignar un producto a un proveedor en la tabla intermedia proveedor_producto
+        public int AsignarProductoProveedor(int idProveedor, int idProducto)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "INSERT INTO proveedor_producto (id_proveedor, id_producto) VALUES (@idProveedor, @idProducto)";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@idProveedor", idProveedor);
+                    cmd.Parameters.AddWithValue("@idProducto", idProducto);
                     return cmd.ExecuteNonQuery();
                 }
             }

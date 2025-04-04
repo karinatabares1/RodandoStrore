@@ -1,52 +1,62 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Logica;
+using Modelo.Entities;
+using System;
 using System.Windows.Forms;
-using Modelo;
 
 namespace Principal
 {
     public partial class AgregarProveedor : Form
     {
+        private ProveedorController proveedorController;
+
         public AgregarProveedor()
         {
             InitializeComponent();
+            proveedorController = new ProveedorController();
         }
 
         private void btnAgregarProveedor_Click(object sender, EventArgs e)
         {
-            // Obtener los valores de los TextBox
+            // Obtener los valores de los controles
             string nombre = txtNombre.Text.Trim();
             string telefono = txtTelefono.Text.Trim();
             string direccion = txtDireccion.Text.Trim();
+            DateTime fecha = dtpFecha.Value;  // Suponiendo que tienes un DateTimePicker llamado dtpFecha
 
-            // Validar que los campos no estén vacíos
-            if (string.IsNullOrEmpty(nombre))
+            // Validar que el nombre no esté vacío
+            if (string.IsNullOrWhiteSpace(nombre))
             {
                 MessageBox.Show("El nombre es obligatorio.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // Crear instancia de la base de datos y guardar el proveedor
-            BaseDatos db = new BaseDatos();
-            int filasAfectadas = db.GuardarProveedor(nombre, telefono, direccion);
+            // Crear un objeto ProveedorEntity con los datos
+            ProveedorEntity proveedor = new ProveedorEntity
+            {
+                Nombre = nombre,
+                Telefono = telefono,
+                Direccion = direccion,
+                FechaRegistro = fecha
+            };
 
-            if (filasAfectadas > 0)
+            try
             {
-                MessageBox.Show("Proveedor guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close(); // Cierra el formulario después de guardar
+                // Llamar al controlador para agregar el proveedor
+                int resultado = proveedorController.AgregarProveedor(nombre, telefono, direccion, fecha);
+                if (resultado > 0)
+                {
+                    MessageBox.Show("Proveedor agregado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close(); // Cierra el formulario tras guardar
+                }
+                else
+                {
+                    MessageBox.Show("Error al guardar el proveedor.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Error al guardar el proveedor.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al guardar el proveedor: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
 }
-    
-

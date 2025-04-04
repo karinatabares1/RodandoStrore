@@ -1,4 +1,4 @@
-﻿using Modelo;
+﻿using Logica;
 using Modelo.Entities;
 using System;
 using System.Collections.Generic;
@@ -9,9 +9,12 @@ namespace Principal
 {
     public partial class VerProveedor : Form
     {
+        private ProveedorController proveedorController;
+
         public VerProveedor()
         {
             InitializeComponent();
+            proveedorController = new ProveedorController();
             CargarProveedores();
         }
 
@@ -19,18 +22,18 @@ namespace Principal
         {
             try
             {
-                BaseDatos bd = new BaseDatos();
-                List<ProveedorEntity> listaProveedores = bd.TraerProveedores();
+                List<ProveedorEntity> listaProveedores = proveedorController.ObtenerProveedores();
 
                 DataTable dt = new DataTable();
                 dt.Columns.Add("id_proveedor", typeof(int));
                 dt.Columns.Add("nombre", typeof(string));
                 dt.Columns.Add("telefono", typeof(string));
                 dt.Columns.Add("direccion", typeof(string));
+                dt.Columns.Add("fecha_registro", typeof(DateTime));
 
                 foreach (ProveedorEntity proveedor in listaProveedores)
                 {
-                    dt.Rows.Add(proveedor.Id_proveedor, proveedor.Nombre, proveedor.Telefono, proveedor.Direccion);
+                    dt.Rows.Add(proveedor.Id_proveedor, proveedor.Nombre, proveedor.Telefono, proveedor.Direccion, proveedor.FechaRegistro);
                 }
 
                 dgvProveedor.DataSource = dt;
