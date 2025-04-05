@@ -67,6 +67,7 @@
             // 
             // dgvUsuarios
             // 
+            dgvUsuarios.BackgroundColor = SystemColors.Control;
             dgvUsuarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvUsuarios.Location = new Point(8, 104);
             dgvUsuarios.Name = "dgvUsuarios";
