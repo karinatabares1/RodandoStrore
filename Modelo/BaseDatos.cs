@@ -105,8 +105,7 @@ namespace Modelo
                             descripcion = reader.GetString("descripcion"),
                             imagen_url = reader.IsDBNull(reader.GetOrdinal("imagen_url")) ? null : reader.GetString("imagen_url"),
                             existencia = reader.GetInt32("existencia"),
-                            precio = reader.GetDecimal("precio"),
-                            cantidad = reader.GetInt32("cantidad")
+                            precio = reader.GetDecimal("precio")
                         });
                     }
                 }
@@ -128,6 +127,59 @@ namespace Modelo
                     cmd.Parameters.AddWithValue("@imagenUrl", imagenUrl);
                     cmd.Parameters.AddWithValue("@existencia", existencia);
                     cmd.Parameters.AddWithValue("@precio", precio);
+                    return cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public int ActualizarProducto(int idProducto, string nombre, string descripcion, string imagenUrl, int existencia, decimal precio)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "UPDATE producto SET nombre = @nombre, descripcion = @descripcion, imagen_url = @imagenUrl, existencia = @existencia, precio = @precio WHERE id_producto = @idProducto";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@nombre", nombre);
+                    cmd.Parameters.AddWithValue("@descripcion", descripcion);
+                    cmd.Parameters.AddWithValue("@imagenUrl", imagenUrl);
+                    cmd.Parameters.AddWithValue("@existencia", existencia);
+                    cmd.Parameters.AddWithValue("@precio", precio);
+                    cmd.Parameters.AddWithValue("@idProducto", idProducto);
+                    return cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // Agregar Imagen de Producto
+        // Agregar Imagen de Producto (actualizado para usar ID)
+        public int ActualizarImagenProducto(int idProducto, byte[] imagen)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "UPDATE producto SET imagen = @imagen WHERE id_producto = @idProducto";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@imagen", imagen);
+                    cmd.Parameters.AddWithValue("@idProducto", idProducto);
+                    return cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
+
+        // Método para eliminar un producto por ID
+        public int EliminarProducto(int idProducto)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "DELETE FROM producto WHERE id_producto = @idProducto";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@idProducto", idProducto);
                     return cmd.ExecuteNonQuery();
                 }
             }

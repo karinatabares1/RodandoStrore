@@ -1,46 +1,47 @@
-﻿using System;
+﻿using Logica;
+using Modelo.Entities;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 namespace Principal
 {
     public partial class VerProductos : Form
     {
-        private string connectionString = "server=localhost;database=rodandoStore;user=root;password=;";
+        private ProductoController productoController;
 
         public VerProductos()
         {
             InitializeComponent();
+            productoController = new ProductoController();
             CargarProductos();
         }
 
         private void CargarProductos()
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            try
             {
-                try
-                {
-                    conn.Open();
-                    string query = "SELECT id_producto, nombre, descripcion, precio, existencia, imagen_url FROM producto";
+                List<ProductoEntity> listaProductos = productoController.ObtenerProductos();
 
-                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn))
-                    {
-                        DataTable dt = new DataTable();
-                        adapter.Fill(dt);
-                        dgvProductos.DataSource = dt;
-                    }
-                }
-                catch (Exception ex)
+                DataTable dt = new DataTable();
+                dt.Columns.Add("id_producto", typeof(int));
+                dt.Columns.Add("nombre", typeof(string));
+                dt.Columns.Add("descripcion", typeof(string));
+                dt.Columns.Add("precio", typeof(decimal));
+                dt.Columns.Add("existencia", typeof(int));
+
+                foreach (ProductoEntity producto in listaProductos)
                 {
-                    MessageBox.Show("Error al cargar los productos: " + ex.Message);
+                    dt.Rows.Add(producto.Id_producto, producto.nombre, producto.descripcion,
+                                producto.precio, producto.existencia);
                 }
+
+                dgvProductos.DataSource = dt;
+            }
+            catch (Exception ex)
+            { 
+                MessageBox.Show("Error al cargar los productos: " + ex.Message);
             }
         }
     }

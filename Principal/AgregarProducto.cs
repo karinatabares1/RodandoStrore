@@ -7,20 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Logica;
 using Modelo;
 
 namespace Principal
 {
     public partial class AgregarProducto : Form
     {
+        private ProductoController controller = new ProductoController(); // Agregamos el controlador
+
         public AgregarProducto()
         {
             InitializeComponent();
-        }
-
-        private void textBox6_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private string imagenRuta = "";
@@ -40,15 +38,14 @@ namespace Principal
         private void btnGuardarProducto_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtNombre.Text) || string.IsNullOrEmpty(txtDescripcion.Text) ||
-                string.IsNullOrEmpty(txtPrecio.Text) || 
-                string.IsNullOrEmpty(imagenRuta))
+                string.IsNullOrEmpty(txtPrecio.Text) || string.IsNullOrEmpty(imagenRuta))
             {
                 MessageBox.Show("Por favor, completa todos los campos y selecciona una imagen.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Guardar la imagen en la carpeta del proyecto
-            string carpetaDestino = @"C:\ImagenesProductos\";
+            // Guardar imagen localmente
+            string carpetaDestino = @"C:\Imagenes\";
             if (!Directory.Exists(carpetaDestino))
             {
                 Directory.CreateDirectory(carpetaDestino);
@@ -56,17 +53,17 @@ namespace Principal
 
             string nombreArchivo = Path.GetFileName(imagenRuta);
             string rutaDestino = Path.Combine(carpetaDestino, nombreArchivo);
-            File.Copy(imagenRuta, rutaDestino, true); // Copia la imagen a la carpeta destino
+            File.Copy(imagenRuta, rutaDestino, true); // Copia la imagen
 
-            // Obtener los datos del formulario
+            // Obtener datos del formulario
             string nombre = txtNombre.Text;
             string descripcion = txtDescripcion.Text;
             decimal precio = Convert.ToDecimal(txtPrecio.Text);
-            int existencia = Convert.ToInt32(txtExistencia.Text); // Solo se usa 'existencia'
-            string imagenUrl = rutaDestino;  // Ruta de la imagen
-            // Guardar en la base de datos
-            BaseDatos bd = new BaseDatos();
-            int resultado = bd.GuardarProducto(nombre, descripcion, imagenUrl, existencia, precio);
+            int existencia = Convert.ToInt32(txtExistencia.Text);
+            string imagenUrl = rutaDestino;
+
+            // Usar el controlador
+            int resultado = controller.GuardarProducto(nombre, descripcion, imagenUrl, existencia, precio);
 
             if (resultado > 0)
             {
@@ -77,6 +74,5 @@ namespace Principal
                 MessageBox.Show("Error al guardar el producto.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
     }
 }

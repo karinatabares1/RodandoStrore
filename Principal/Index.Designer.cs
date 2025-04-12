@@ -121,12 +121,12 @@
             // 
             // pictureBox4
             // 
-            pictureBox4.Location = new Point(589, 423);
-            pictureBox4.Margin = new Padding(3, 2, 3, 2);
-            pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(181, 74);
-            pictureBox4.TabIndex = 6;
-            pictureBox4.TabStop = false;
+            //pictureBox4.Location = new Point(589, 423);
+            //pictureBox4.Margin = new Padding(3, 2, 3, 2);
+            //pictureBox4.Name = "pictureBox4";
+            //pictureBox4.Size = new Size(181, 74);
+            //pictureBox4.TabIndex = 6;
+            //pictureBox4.TabStop = false;
             // 
             // label2
             // 

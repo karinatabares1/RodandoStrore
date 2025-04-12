@@ -13,8 +13,6 @@ namespace Modelo.Entities
         public string imagen_url { get; set; }
         public int existencia { get; set; }
         public decimal precio { get; set; }
-        public int cantidad { get; set; }
-       
         public string descripcion { get; set; }
     }
 
