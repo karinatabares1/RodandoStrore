@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 
 namespace Modelo
 {
-    public class ConexionMysql
+    public class ConexionMysql : IDisposable
     {
+        private readonly string cadenaConexion = "server=localhost;database=rodandoStore;user=root;password=;";
         public MySqlConnection connection;
-        private string cadenaConexion;
 
         public ConexionMysql()
         {
-            cadenaConexion = "server=localhost;database=rodandoStore;user=root;password=;";
             connection = new MySqlConnection(cadenaConexion);
         }
 
@@ -29,11 +24,32 @@ namespace Modelo
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("Error al abrir la conexión: " + e.Message);
+                throw; // Lanza la excepción para que pueda manejarse en el formulario
             }
 
             return connection;
+        }
 
+        public void CloseConnection()
+        {
+            try
+            {
+                if (connection.State != System.Data.ConnectionState.Closed)
+                {
+                    connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error al cerrar la conexión: " + e.Message);
+            }
+        }
+
+        public void Dispose()
+        {
+            CloseConnection();
+            connection.Dispose();
         }
     }
 }

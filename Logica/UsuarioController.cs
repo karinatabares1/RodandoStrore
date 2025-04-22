@@ -40,5 +40,14 @@ namespace Logica
         {
             return db.EliminarUsuario(id);
         }
+
+        public UsuarioEntity ValidarCredenciales(string nombre)
+        {
+            List<UsuarioEntity> usuarios = db.TraerUsuarios();
+            return usuarios
+                .FirstOrDefault(u =>
+                    u.nombre.Equals(nombre,
+                        System.StringComparison.OrdinalIgnoreCase));
+        }
     }
 }

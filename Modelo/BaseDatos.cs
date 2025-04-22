@@ -133,7 +133,6 @@ namespace Modelo
             }
         }
 
-        // Método para obtener todas las ventas
         public List<VentasEntity> TraerVentas()
         {
             List<VentasEntity> listaVentas = new List<VentasEntity>();
@@ -141,7 +140,10 @@ namespace Modelo
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT * FROM ventas";
+                string query = @"SELECT v.id_ventas, v.id_usuario, u.nombre AS nombre_usuario, v.fecha, v.total 
+                         FROM ventas v
+                         INNER JOIN usuario u ON v.id_usuario = u.id_usuario";
+
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -152,29 +154,41 @@ namespace Modelo
                             Id_ventas = reader.GetInt32("id_ventas"),
                             Id_usuario = reader.GetInt32("id_usuario"),
                             fecha = reader.GetDateTime("fecha"),
-                            total = reader.GetDecimal("total")
+                            total = reader.GetDecimal("total"),
+                            usuario = new UsuarioEntity
+                            {
+                                Id_usuario = reader.GetInt32("id_usuario"),
+                                nombre = reader.GetString("nombre_usuario")
+                            }
                         });
                     }
                 }
             }
+
             return listaVentas;
         }
+
 
         // Método para guardar una venta
         public int GuardarVenta(int idUsuario, decimal total)
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            using (var conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "INSERT INTO ventas (id_usuario, total) VALUES (@idUsuario, @total)";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                string query = @"
+            INSERT INTO ventas (id_usuario, total)
+            VALUES (@idUsuario, @total);
+            SELECT LAST_INSERT_ID();";
+                using (var cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
                     cmd.Parameters.AddWithValue("@total", total);
-                    return cmd.ExecuteNonQuery();
+                    // ExecuteScalar devuelve el último id
+                    return Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
         }
+
 
         // Método para Actualizar una venta
 
@@ -210,53 +224,51 @@ namespace Modelo
             }
         }
 
-        // Obtener detalle de ventas por id de venta
-        public List<DetalleVentaEntity> TraerDetalleVentas(int idVenta)
+        public int GuardarDetalleVenta(int idVenta, int idProducto, int cantidad, decimal subtotal)
         {
-            List<DetalleVentaEntity> listaDetalles = new List<DetalleVentaEntity>();
-
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            using (var conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT * FROM detalle_ventas WHERE id_ventas = @idVenta";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                string query = @"
+            INSERT INTO detalle_ventas 
+                (id_ventas, id_producto, cantidad, subtotal) 
+            VALUES 
+                (@idVenta, @idProducto, @cantidad, @subtotal)";
+                using (var cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@idVenta", idVenta);
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            listaDetalles.Add(new DetalleVentaEntity
-                            {
-                                Id_detalle_venta = reader.GetInt32("id_detalle_venta"),
-                                Id_ventas = reader.GetInt32("id_ventas"),
-                                Id_producto = reader.GetInt32("id_producto"),
-                                cantidad = reader.GetInt32("cantidad"),
-                                subtotal = reader.GetDecimal("subtotal")
-                            });
-                        }
-                    }
-                }
-            }
-            return listaDetalles;
-        }
-
-        // Guardar un detalle de venta
-        public int GuardarDetalleVenta(int idVentas, int idProducto, int cantidad, decimal subtotal)
-        {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                conn.Open();
-                string query = "INSERT INTO detalle_ventas (id_ventas, id_producto, cantidad, subtotal) VALUES (@idVentas, @idProducto, @cantidad, @subtotal)";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@idVentas", idVentas);
                     cmd.Parameters.AddWithValue("@idProducto", idProducto);
                     cmd.Parameters.AddWithValue("@cantidad", cantidad);
                     cmd.Parameters.AddWithValue("@subtotal", subtotal);
                     return cmd.ExecuteNonQuery();
                 }
             }
+        }
+
+        public List<DetalleVentaEntity> TraerDetalleVentas(int idVenta)
+        {
+            var lista = new List<DetalleVentaEntity>();
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT * FROM detalle_ventas";
+                using (var cmd = new MySqlCommand(query, conn))
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        lista.Add(new DetalleVentaEntity
+                        {
+                            Id_detalle_venta = reader.GetInt32("id_detalle_venta"),
+                            Id_ventas = reader.GetInt32("id_ventas"),
+                            Id_producto = reader.GetInt32("id_producto"),
+                            cantidad = reader.GetInt32("cantidad"),
+                            subtotal = reader.GetDecimal("subtotal")
+                        });
+                    }
+                }
+            }
+            return lista;
         }
 
         // Actualizar un detalle de venta
@@ -292,6 +304,7 @@ namespace Modelo
                 }
             }
         }
+
 
         // Método para obtener los roles correctamente
         public Dictionary<int, string> ObtenerRoles()
