@@ -2,25 +2,29 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Logica; // Importar el controlador
 
 namespace Principal
 {
     public partial class AgregarUsuario : Form
     {
+        private UsuarioController usuarioController; // Usamos el controlador
+
         public AgregarUsuario()
         {
             InitializeComponent();
+            usuarioController = new UsuarioController();
             CargarRoles();
         }
 
-        // Método para cargar los roles desde la base de datos
+        // Método para cargar los roles desde el controlador
         private void CargarRoles()
         {
-            BaseDatos bd = new BaseDatos();
-            Dictionary<int, string> roles = bd.ObtenerRoles();
+            Dictionary<int, string> roles = usuarioController.ObtenerRoles();
+            cmbRoles.Items.Clear();
+
             foreach (var role in roles)
             {
-                // Se agrega el rol al ComboBox, mostrando el nombre y guardando el id
                 cmbRoles.Items.Add(new ComboBoxItem(role.Value, role.Key));
             }
         }
@@ -28,6 +32,7 @@ namespace Principal
         private void btnAgregarUsuario_Click(object sender, EventArgs e)
         {
             string nombre = txtNombre.Text.Trim();
+
             if (string.IsNullOrEmpty(nombre) || cmbRoles.SelectedItem == null)
             {
                 MessageBox.Show("Por favor, ingrese un nombre y seleccione un rol.");
@@ -37,11 +42,10 @@ namespace Principal
             // Obtener el id del rol seleccionado
             int idRol = ((ComboBoxItem)cmbRoles.SelectedItem).Value;
 
-            // Llamada al método GuardarUsuario de BaseDatos
-            BaseDatos bd = new BaseDatos();
             try
             {
-                int resultado = bd.GuardarUsuario(nombre, idRol);
+                int resultado = usuarioController.AgregarUsuario(nombre, idRol);
+
                 if (resultado > 0)
                 {
                     MessageBox.Show("Usuario agregado correctamente.");

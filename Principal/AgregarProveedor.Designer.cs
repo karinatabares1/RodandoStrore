@@ -40,6 +40,8 @@
             txtDireccion = new TextBox();
             label3 = new Label();
             txtTelefono = new TextBox();
+            label6 = new Label();
+            dtpFecha = new DateTimePicker();
             toolStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -47,7 +49,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(419, 177);
+            label2.Location = new Point(418, 180);
             label2.Name = "label2";
             label2.Size = new Size(70, 17);
             label2.TabIndex = 48;
@@ -58,7 +60,7 @@
             btnAgregarProveedor.BackColor = Color.Navy;
             btnAgregarProveedor.Font = new Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAgregarProveedor.ForeColor = SystemColors.ButtonFace;
-            btnAgregarProveedor.Location = new Point(316, 229);
+            btnAgregarProveedor.Location = new Point(316, 270);
             btnAgregarProveedor.Margin = new Padding(3, 2, 3, 2);
             btnAgregarProveedor.Name = "btnAgregarProveedor";
             btnAgregarProveedor.Size = new Size(145, 48);
@@ -72,7 +74,7 @@
             label4.AutoSize = true;
             label4.BackColor = Color.Transparent;
             label4.Font = new Font("Arial", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(108, 125);
+            label4.Location = new Point(94, 125);
             label4.Name = "label4";
             label4.Size = new Size(22, 17);
             label4.TabIndex = 45;
@@ -148,7 +150,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Arial", 10.8F);
-            label3.Location = new Point(108, 182);
+            label3.Location = new Point(94, 181);
             label3.Name = "label3";
             label3.Size = new Size(62, 17);
             label3.TabIndex = 50;
@@ -163,11 +165,30 @@
             txtTelefono.Size = new Size(166, 22);
             txtTelefono.TabIndex = 51;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.Location = new Point(419, 230);
+            label6.Name = "label6";
+            label6.Size = new Size(49, 17);
+            label6.TabIndex = 71;
+            label6.Text = "Fecha";
+            // 
+            // dtpFecha
+            // 
+            dtpFecha.Location = new Point(507, 226);
+            dtpFecha.Name = "dtpFecha";
+            dtpFecha.Size = new Size(218, 23);
+            dtpFecha.TabIndex = 70;
+            // 
             // AgregarProveedor
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label6);
+            Controls.Add(dtpFecha);
             Controls.Add(txtTelefono);
             Controls.Add(label3);
             Controls.Add(txtDireccion);
@@ -201,5 +222,7 @@
         private TextBox txtDireccion;
         private Label label3;
         private TextBox txtTelefono;
+        private Label label6;
+        private DateTimePicker dtpFecha;
     }
 }

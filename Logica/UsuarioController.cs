@@ -10,26 +10,44 @@ namespace Logica
 {
     public class UsuarioController
     {
-        public List<UsuarioEntity> verUsuarios()
-        {
-            BaseDatos db = new BaseDatos();
-            List<UsuarioEntity> usuarios = db.TraerUsuarios();
-            return usuarios;
+        private BaseDatos db = new BaseDatos();
 
+        // Obtener todos los usuarios
+        public List<UsuarioEntity> ObtenerUsuarios()
+        {
+            return db.TraerUsuarios();
         }
 
-        public string GuardarUsuario(string nombre, int Id_Rol)
+        // Agregar usuario
+        public int AgregarUsuario(string nombre, int idRol)
         {
-            BaseDatos db = new BaseDatos();
-            int filasAfectadas = db.GuardarUsuario(nombre, Id_Rol);
-            if (filasAfectadas > 0)
-            {
-                return "Usuario guardado";
-            }
-            else
-            {
-                return "Error al guardar el usuario";
-            }
+            return db.GuardarUsuario(nombre, idRol);
+        }
+
+        public Dictionary<int, string> ObtenerRoles()
+        {
+            return db.ObtenerRoles();
+        }
+
+        // Actualizar usuario
+        public int ActualizarUsuario(int id, string nombre, int idRol)
+        {
+            return db.ActualizarUsuario(id, nombre, idRol);
+        }
+
+        // Eliminar usuario
+        public int EliminarUsuario(int id)
+        {
+            return db.EliminarUsuario(id);
+        }
+
+        public UsuarioEntity ValidarCredenciales(string nombre)
+        {
+            List<UsuarioEntity> usuarios = db.TraerUsuarios();
+            return usuarios
+                .FirstOrDefault(u =>
+                    u.nombre.Equals(nombre,
+                        System.StringComparison.OrdinalIgnoreCase));
         }
     }
 }

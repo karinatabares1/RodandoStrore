@@ -10,24 +10,22 @@ namespace Logica
 {
     public class VentasController
     {
-        public List<VentasEntity> verVentas()
+        private BaseDatos db = new BaseDatos();
+
+        // Crea la venta y devuelve el id generado
+        public int CrearVenta(int idUsuario, decimal total)
         {
-            BaseDatos db = new BaseDatos();
-            List<VentasEntity> ventas = db.TraerVentas();
-            return ventas;
+            return db.GuardarVenta(idUsuario, total);
         }
-        public string GuardarVenta(int idUsuario, decimal total)
+
+        public List<VentasEntity> ObtenerVentas()
         {
-            BaseDatos db = new BaseDatos();
-            int resultado = db.GuardarVenta(idUsuario, total);
-            if (resultado > 0)
-            {
-                return "Venta guardada";
-            }
-            else
-            {
-                return "Error al guardar la venta";
-            }
+            return db.TraerVentas();
+        }
+
+        public List<VentasEntity> ObtenerVentasPorVendedor(int idUsuario)
+        {
+            return db.TraerVentas().Where(v => v.Id_usuario == idUsuario).ToList();
         }
     }
 }

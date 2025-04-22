@@ -1,54 +1,76 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Logica;
 using Modelo;
-using MySql.Data.MySqlClient;
 
 namespace Principal
 {
     public partial class ActualizarUsuario : Form
     {
-        private BaseDatos bd;
+        private UsuarioController usuarioController;
 
         public ActualizarUsuario()
         {
             InitializeComponent();
-            bd = new BaseDatos();
+            usuarioController = new UsuarioController();
             CargarRoles();
         }
 
         private void CargarRoles()
         {
-            Dictionary<int, string> roles = bd.ObtenerRoles();
-            cmbRoles.Items.Clear();
-            foreach (var rol in roles)
+            try
             {
-                cmbRoles.Items.Add(new KeyValuePair<int, string>(rol.Key, rol.Value));
+                Dictionary<int, string> roles = usuarioController.ObtenerRoles();
+                cmbRoles.Items.Clear();
+
+                foreach (var rol in roles)
+                {
+                    cmbRoles.Items.Add(new KeyValuePair<int, string>(rol.Key, rol.Value));
+                }
+
+                cmbRoles.DisplayMember = "Value";
+                cmbRoles.ValueMember = "Key";
             }
-            cmbRoles.DisplayMember = "Value";
-            cmbRoles.ValueMember = "Key";
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar roles: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnActualizaUsuario_Click(object sender, EventArgs e)
         {
-            if (txtID.Text == "" || txtNombre.Text == "" || cmbRoles.SelectedItem == null)
+            if (string.IsNullOrWhiteSpace(txtID.Text) || string.IsNullOrWhiteSpace(txtNombre.Text) || cmbRoles.SelectedItem == null)
             {
-                MessageBox.Show("Por favor, complete todos los campos.");
+                MessageBox.Show("Por favor, complete todos los campos.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            int idUsuario = int.Parse(txtID.Text);
-            string nuevoNombre = txtNombre.Text;
+            if (!int.TryParse(txtID.Text, out int idUsuario))
+            {
+                MessageBox.Show("El ID del usuario debe ser un número válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string nuevoNombre = txtNombre.Text.Trim();
             int nuevoIdRol = ((KeyValuePair<int, string>)cmbRoles.SelectedItem).Key;
 
-            int resultado = bd.ActualizarUsuario(idUsuario, nuevoNombre, nuevoIdRol);
-            if (resultado > 0)
+            try
             {
-                MessageBox.Show("Usuario actualizado correctamente.");
+                int resultado = usuarioController.ActualizarUsuario(idUsuario, nuevoNombre, nuevoIdRol);
+
+                if (resultado > 0)
+                {
+                    MessageBox.Show("Usuario actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("No se encontró el usuario o no hubo cambios.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("No se encontró el usuario.");
+                MessageBox.Show("Error al actualizar usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -56,14 +78,13 @@ namespace Principal
         {
             if (string.IsNullOrWhiteSpace(txtID.Text))
             {
-                MessageBox.Show("Por favor, ingrese el ID del usuario a eliminar.");
+                MessageBox.Show("Por favor, ingrese el ID del usuario a eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            int idUsuario;
-            if (!int.TryParse(txtID.Text, out idUsuario))
+            if (!int.TryParse(txtID.Text, out int idUsuario))
             {
-                MessageBox.Show("El ID del usuario debe ser un número válido.");
+                MessageBox.Show("El ID del usuario debe ser un número válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -76,15 +97,23 @@ namespace Principal
 
             if (confirmacion == DialogResult.Yes)
             {
-                int resultado = bd.EliminarUsuario(idUsuario);
-                if (resultado > 0)
+                try
                 {
-                    MessageBox.Show("Usuario eliminado correctamente.");
-                    txtID.Clear();
+                    int resultado = usuarioController.EliminarUsuario(idUsuario);
+
+                    if (resultado > 0)
+                    {
+                        MessageBox.Show("Usuario eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        txtID.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se encontró un usuario con ese ID.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("No se encontró un usuario con ese ID.");
+                    MessageBox.Show("Error al eliminar usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

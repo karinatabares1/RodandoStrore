@@ -1,4 +1,5 @@
-﻿using Modelo;
+﻿using Logica;
+using Modelo.Entities;
 using System;
 using System.Windows.Forms;
 
@@ -6,9 +7,12 @@ namespace Principal
 {
     public partial class ActualizarProveedor : Form
     {
+        private ProveedorController proveedorController;
+
         public ActualizarProveedor()
         {
             InitializeComponent();
+            proveedorController = new ProveedorController();
         }
 
         private void btnActualizarProveedor_Click(object sender, EventArgs e)
@@ -21,8 +25,7 @@ namespace Principal
                 return;
             }
 
-            int idProveedor;
-            if (!int.TryParse(txtID.Text, out idProveedor))
+            if (!int.TryParse(txtID.Text, out int idProveedor))
             {
                 MessageBox.Show("El ID del proveedor debe ser un número válido.");
                 return;
@@ -34,8 +37,8 @@ namespace Principal
 
             try
             {
-                BaseDatos bd = new BaseDatos();
-                int resultado = bd.ActualizarProveedor(idProveedor, nombre, telefono, direccion);
+                int resultado = proveedorController.ActualizarProveedor(idProveedor, nombre, telefono, direccion, DateTime.Now);
+
                 if (resultado > 0)
                 {
                     MessageBox.Show("Proveedor actualizado correctamente.");
@@ -54,8 +57,7 @@ namespace Principal
 
         private void btnEliminarProveedor_Click(object sender, EventArgs e)
         {
-            int idProveedor;
-            if (!int.TryParse(txtID.Text, out idProveedor))
+            if (!int.TryParse(txtID.Text, out int idProveedor))
             {
                 MessageBox.Show("El ID del proveedor debe ser un número válido para eliminar.");
                 return;
@@ -72,12 +74,10 @@ namespace Principal
             {
                 try
                 {
-                    BaseDatos bd = new BaseDatos();
-                    int resultado = bd.EliminarProveedor(idProveedor);
+                    int resultado = proveedorController.EliminarProveedor(idProveedor);
                     if (resultado > 0)
                     {
                         MessageBox.Show("Proveedor eliminado correctamente.");
-                        // Opcional: Limpiar campos después de eliminar
                         txtNombre.Clear();
                         txtTelefono.Clear();
                         txtDireccion.Clear();

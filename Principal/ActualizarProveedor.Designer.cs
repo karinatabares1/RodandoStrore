@@ -41,6 +41,10 @@
             toolStrip1 = new ToolStrip();
             toolStripLabel1 = new ToolStripLabel();
             btnEliminarProveedor = new Button();
+            txtIDProducto = new TextBox();
+            label5 = new Label();
+            dtpFecha = new DateTimePicker();
+            label6 = new Label();
             toolStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -57,7 +61,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Arial", 10.8F);
-            label3.Location = new Point(110, 172);
+            label3.Location = new Point(96, 173);
             label3.Name = "label3";
             label3.Size = new Size(62, 17);
             label3.TabIndex = 61;
@@ -87,7 +91,7 @@
             btnActualizarProveedor.BackColor = Color.Navy;
             btnActualizarProveedor.Font = new Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnActualizarProveedor.ForeColor = SystemColors.ButtonFace;
-            btnActualizarProveedor.Location = new Point(400, 246);
+            btnActualizarProveedor.Location = new Point(420, 296);
             btnActualizarProveedor.Margin = new Padding(3, 2, 3, 2);
             btnActualizarProveedor.Name = "btnActualizarProveedor";
             btnActualizarProveedor.Size = new Size(162, 48);
@@ -101,7 +105,7 @@
             label4.AutoSize = true;
             label4.BackColor = Color.Transparent;
             label4.Font = new Font("Arial", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(110, 115);
+            label4.Location = new Point(96, 115);
             label4.Name = "label4";
             label4.Size = new Size(22, 17);
             label4.TabIndex = 57;
@@ -169,7 +173,7 @@
             btnEliminarProveedor.BackColor = Color.SteelBlue;
             btnEliminarProveedor.Font = new Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnEliminarProveedor.ForeColor = SystemColors.ActiveCaptionText;
-            btnEliminarProveedor.Location = new Point(205, 246);
+            btnEliminarProveedor.Location = new Point(225, 296);
             btnEliminarProveedor.Margin = new Padding(3, 2, 3, 2);
             btnEliminarProveedor.Name = "btnEliminarProveedor";
             btnEliminarProveedor.Size = new Size(162, 48);
@@ -178,11 +182,51 @@
             btnEliminarProveedor.UseVisualStyleBackColor = false;
             btnEliminarProveedor.Click += btnEliminarProveedor_Click;
             // 
+            // txtIDProducto
+            // 
+            txtIDProducto.Font = new Font("Arial", 9.75F);
+            txtIDProducto.Location = new Point(187, 222);
+            txtIDProducto.Margin = new Padding(3, 2, 3, 2);
+            txtIDProducto.Name = "txtIDProducto";
+            txtIDProducto.Size = new Size(166, 22);
+            txtIDProducto.TabIndex = 65;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label5.Location = new Point(96, 227);
+            label5.Name = "label5";
+            label5.Size = new Size(85, 17);
+            label5.TabIndex = 64;
+            label5.Text = "ID Producto";
+            // 
+            // dtpFecha
+            // 
+            dtpFecha.Location = new Point(509, 223);
+            dtpFecha.Name = "dtpFecha";
+            dtpFecha.Size = new Size(218, 23);
+            dtpFecha.TabIndex = 66;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.Location = new Point(421, 227);
+            label6.Name = "label6";
+            label6.Size = new Size(49, 17);
+            label6.TabIndex = 67;
+            label6.Text = "Fecha";
+            // 
             // ActualizarProveedor
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label6);
+            Controls.Add(dtpFecha);
+            Controls.Add(txtIDProducto);
+            Controls.Add(label5);
             Controls.Add(btnEliminarProveedor);
             Controls.Add(txtTelefono);
             Controls.Add(label3);
@@ -218,5 +262,9 @@
         private ToolStrip toolStrip1;
         private ToolStripLabel toolStripLabel1;
         private Button btnEliminarProveedor;
+        private TextBox txtIDProducto;
+        private Label label5;
+        private DateTimePicker dtpFecha;
+        private Label label6;
     }
 }

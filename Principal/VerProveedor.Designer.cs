@@ -38,20 +38,21 @@
             // 
             // dgvProveedor
             // 
+            dgvProveedor.BackgroundColor = SystemColors.Control;
             dgvProveedor.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProveedor.Location = new Point(56, 92);
+            dgvProveedor.Location = new Point(36, 92);
             dgvProveedor.Name = "dgvProveedor";
-            dgvProveedor.Size = new Size(660, 197);
+            dgvProveedor.Size = new Size(696, 255);
             dgvProveedor.TabIndex = 38;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Arial", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.Navy;
-            label1.Location = new Point(315, 35);
+            label1.Location = new Point(312, 35);
             label1.Name = "label1";
-            label1.Size = new Size(157, 29);
+            label1.Size = new Size(180, 32);
             label1.TabIndex = 37;
             label1.Text = "Proveedores";
             // 

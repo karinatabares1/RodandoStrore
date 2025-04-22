@@ -12,10 +12,10 @@ namespace Principal
     {
         private ProductoController controller = new ProductoController();
 
-        public ActualizarProducto()
-        {
-            InitializeComponent();
-        }
+//        public ActualizarProducto()
+//        {
+//            InitializeComponent();
+//        }
 
         private void btnActualizarProducto_Click(object sender, EventArgs e)
         {

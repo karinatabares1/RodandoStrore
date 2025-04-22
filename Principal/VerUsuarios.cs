@@ -1,4 +1,4 @@
-﻿using Modelo;
+﻿using Logica;
 using Modelo.Entities;
 using System;
 using System.Collections.Generic;
@@ -9,9 +9,12 @@ namespace Principal
 {
     public partial class VerUsuarios : Form
     {
+        private UsuarioController usuarioController;
+
         public VerUsuarios()
         {
             InitializeComponent();
+            usuarioController = new UsuarioController();
             CargarUsuarios();
         }
 
@@ -19,9 +22,8 @@ namespace Principal
         {
             try
             {
-                BaseDatos bd = new BaseDatos();
-                List<UsuarioEntity> usuarios = bd.TraerUsuarios();
-                Dictionary<int, string> roles = bd.ObtenerRoles();
+                List<UsuarioEntity> usuarios = usuarioController.ObtenerUsuarios();
+                Dictionary<int, string> roles = usuarioController.ObtenerRoles();
 
                 DataTable dt = new DataTable();
                 dt.Columns.Add("id_usuario", typeof(int));
