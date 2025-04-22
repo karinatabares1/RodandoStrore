@@ -15,7 +15,6 @@ namespace Principal
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 <<<<<<< HEAD
-            Application.Run(new ActualizarProducto());
 =======
             Application.Run(new Principal());
 >>>>>>> mariana
