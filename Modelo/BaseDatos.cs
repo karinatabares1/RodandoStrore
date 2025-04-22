@@ -9,7 +9,8 @@ namespace Modelo
     {
         private string connectionString = "server=localhost;database=rodandoStore;user=root;password=;";
 
-        // Método para obtener todos los usuarios
+        // Métodos de Usuario
+
         public List<UsuarioEntity> TraerUsuarios()
         {
             List<UsuarioEntity> listaUsuarios = new List<UsuarioEntity>();
@@ -35,7 +36,6 @@ namespace Modelo
             return listaUsuarios;
         }
 
-        // Método para guardar un usuario
         public int GuardarUsuario(string nombre, int idRol)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -51,7 +51,6 @@ namespace Modelo
             }
         }
 
-        // Método para actualizar un usuario
         public int ActualizarUsuario(int Id_Usuario, string nombre, int Id_Rol)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -68,7 +67,6 @@ namespace Modelo
             }
         }
 
-        // Método para eliminar un usuario por ID
         public int EliminarUsuario(int idUsuario)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -83,8 +81,8 @@ namespace Modelo
             }
         }
 
+        // Métodos de Producto
 
-        // Método para obtener todos los productos
         public List<ProductoEntity> TraerProductos()
         {
             List<ProductoEntity> listaProductos = new List<ProductoEntity>();
@@ -114,7 +112,6 @@ namespace Modelo
             return listaProductos;
         }
 
-        // Método para guardar un producto
         public int GuardarProducto(string nombre, string descripcion, string imagenUrl, int existencia, decimal precio)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -133,6 +130,8 @@ namespace Modelo
             }
         }
 
+        // Métodos de Venta
+
         public List<VentasEntity> TraerVentas()
         {
             List<VentasEntity> listaVentas = new List<VentasEntity>();
@@ -141,8 +140,8 @@ namespace Modelo
             {
                 conn.Open();
                 string query = @"SELECT v.id_ventas, v.id_usuario, u.nombre AS nombre_usuario, v.fecha, v.total 
-                         FROM ventas v
-                         INNER JOIN usuario u ON v.id_usuario = u.id_usuario";
+                                 FROM ventas v
+                                 INNER JOIN usuario u ON v.id_usuario = u.id_usuario";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 using (MySqlDataReader reader = cmd.ExecuteReader())
@@ -168,47 +167,23 @@ namespace Modelo
             return listaVentas;
         }
 
-
-        // Método para guardar una venta
         public int GuardarVenta(int idUsuario, decimal total)
         {
             using (var conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
                 string query = @"
-            INSERT INTO ventas (id_usuario, total)
-            VALUES (@idUsuario, @total);
-            SELECT LAST_INSERT_ID();";
+                    INSERT INTO ventas (id_usuario, total)
+                    VALUES (@idUsuario, @total);
+                    SELECT LAST_INSERT_ID();";
                 using (var cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
                     cmd.Parameters.AddWithValue("@total", total);
-                    // ExecuteScalar devuelve el último id
                     return Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
         }
-
-
-        // Método para Actualizar una venta
-
-        public int ActualizarVenta(int idVenta, int idUsuario, decimal total)
-        {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                conn.Open();
-                string query = "UPDATE ventas SET id_usuario = @idUsuario, total = @total WHERE id_ventas = @idVenta";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
-                    cmd.Parameters.AddWithValue("@total", total);
-                    cmd.Parameters.AddWithValue("@idVenta", idVenta);
-                    return cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
-        // Método para eliminar una venta
 
         public int EliminarVenta(int idVenta)
         {
@@ -224,16 +199,18 @@ namespace Modelo
             }
         }
 
+        // Métodos de Detalle de Venta
+
         public int GuardarDetalleVenta(int idVenta, int idProducto, int cantidad, decimal subtotal)
         {
             using (var conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
                 string query = @"
-            INSERT INTO detalle_ventas 
-                (id_ventas, id_producto, cantidad, subtotal) 
-            VALUES 
-                (@idVenta, @idProducto, @cantidad, @subtotal)";
+                    INSERT INTO detalle_ventas 
+                    (id_ventas, id_producto, cantidad, subtotal) 
+                    VALUES 
+                    (@idVenta, @idProducto, @cantidad, @subtotal)";
                 using (var cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@idVenta", idVenta);
@@ -251,46 +228,29 @@ namespace Modelo
             using (var conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT * FROM detalle_ventas";
+                string query = "SELECT * FROM detalle_ventas WHERE id_ventas = @idVenta";
                 using (var cmd = new MySqlCommand(query, conn))
-                using (var reader = cmd.ExecuteReader())
                 {
-                    while (reader.Read())
+                    cmd.Parameters.AddWithValue("@idVenta", idVenta);
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        lista.Add(new DetalleVentaEntity
+                        while (reader.Read())
                         {
-                            Id_detalle_venta = reader.GetInt32("id_detalle_venta"),
-                            Id_ventas = reader.GetInt32("id_ventas"),
-                            Id_producto = reader.GetInt32("id_producto"),
-                            cantidad = reader.GetInt32("cantidad"),
-                            subtotal = reader.GetDecimal("subtotal")
-                        });
+                            lista.Add(new DetalleVentaEntity
+                            {
+                                Id_detalle_venta = reader.GetInt32("id_detalle_venta"),
+                                Id_ventas = reader.GetInt32("id_ventas"),
+                                Id_producto = reader.GetInt32("id_producto"),
+                                cantidad = reader.GetInt32("cantidad"),
+                                subtotal = reader.GetDecimal("subtotal")
+                            });
+                        }
                     }
                 }
             }
             return lista;
         }
 
-        // Actualizar un detalle de venta
-        public int ActualizarDetalleVenta(int idDetalleVenta, int idVentas, int idProducto, int cantidad, decimal subtotal)
-        {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                conn.Open();
-                string query = "UPDATE detalle_ventas SET id_ventas = @idVentas, id_producto = @idProducto, cantidad = @cantidad, subtotal = @subtotal WHERE id_detalle_venta = @idDetalleVenta";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@idVentas", idVentas);
-                    cmd.Parameters.AddWithValue("@idProducto", idProducto);
-                    cmd.Parameters.AddWithValue("@cantidad", cantidad);
-                    cmd.Parameters.AddWithValue("@subtotal", subtotal);
-                    cmd.Parameters.AddWithValue("@idDetalleVenta", idDetalleVenta);
-                    return cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
-        // Eliminar un detalle de venta
         public int EliminarDetalleVenta(int idDetalleVenta)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -305,31 +265,8 @@ namespace Modelo
             }
         }
 
+        // Métodos de Proveedor
 
-        // Método para obtener los roles correctamente
-        public Dictionary<int, string> ObtenerRoles()
-            {
-                Dictionary<int, string> roles = new Dictionary<int, string>();
-
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-                    // Corrige el nombre de la tabla y la columna
-                    string query = "SELECT id_rol, nombre FROM rol";
-
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            roles.Add(reader.GetInt32("id_rol"), reader.GetString("nombre"));
-                        }
-                    }
-                }
-                return roles;
-            }
-
-        // Método para obtener todos los proveedores (sin id_producto)
         public List<ProveedorEntity> TraerProveedores()
         {
             List<ProveedorEntity> listaProveedores = new List<ProveedorEntity>();
@@ -357,13 +294,12 @@ namespace Modelo
             return listaProveedores;
         }
 
-        // Método para guardar un proveedor (sin id_producto)
         public int GuardarProveedor(string nombre, string telefono, string direccion, DateTime fecha)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "INSERT INTO proveedor (nombre, telefono, direccion) VALUES (@nombre, @telefono, @direccion, @fecha)";
+                string query = "INSERT INTO proveedor (nombre, telefono, direccion, fecha_registro) VALUES (@nombre, @telefono, @direccion, @fecha)";
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@nombre", nombre);
@@ -375,40 +311,6 @@ namespace Modelo
             }
         }
 
-        // Método para actualizar un proveedor (sin id_producto)
-        public int ActualizarProveedor(int idProveedor, string nombre, string telefono, string direccion, DateTime fecha)
-        {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                conn.Open();
-                string query = "UPDATE proveedor SET nombre = @nombre, telefono = @telefono, direccion = @direccion, fecha = @fecha WHERE id_proveedor = @idProveedor";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@nombre", nombre);
-                    cmd.Parameters.AddWithValue("@telefono", telefono);
-                    cmd.Parameters.AddWithValue("@direccion", direccion);
-                    cmd.Parameters.AddWithValue("@idProveedor", idProveedor);
-                    return cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
-        // Método para eliminar un proveedor
-        public int EliminarProveedor(int idProveedor)
-        {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                conn.Open();
-                string query = "DELETE FROM proveedor WHERE id_proveedor = @idProveedor";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@idProveedor", idProveedor);
-                    return cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
-        // Método para asignar un producto a un proveedor en la tabla intermedia proveedor_producto
         public int AsignarProductoProveedor(int idProveedor, int idProducto)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -423,6 +325,5 @@ namespace Modelo
                 }
             }
         }
-
-    }    
+    }
 }
