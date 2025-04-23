@@ -43,9 +43,9 @@
             // 
             btnLogin.BackColor = Color.Navy;
             btnLogin.ForeColor = SystemColors.Control;
-            btnLogin.Location = new Point(330, 265);
+            btnLogin.Location = new Point(285, 278);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(144, 49);
+            btnLogin.Size = new Size(165, 52);
             btnLogin.TabIndex = 0;
             btnLogin.Text = "Iniciar Sesión";
             btnLogin.UseVisualStyleBackColor = false;
@@ -54,33 +54,33 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(250, 153);
+            label1.Location = new Point(218, 159);
             label1.Name = "label1";
-            label1.Size = new Size(52, 16);
+            label1.Size = new Size(60, 17);
             label1.TabIndex = 1;
             label1.Text = "Nombre";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(250, 199);
+            label2.Location = new Point(218, 207);
             label2.Name = "label2";
-            label2.Size = new Size(73, 16);
+            label2.Size = new Size(84, 17);
             label2.TabIndex = 2;
             label2.Text = "Contraseña";
             // 
             // txtNombre
             // 
-            txtNombre.Location = new Point(330, 150);
+            txtNombre.Location = new Point(309, 155);
             txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(154, 22);
+            txtNombre.Size = new Size(175, 25);
             txtNombre.TabIndex = 3;
             // 
             // txtContrasena
             // 
-            txtContrasena.Location = new Point(330, 199);
+            txtContrasena.Location = new Point(309, 207);
             txtContrasena.Name = "txtContrasena";
-            txtContrasena.Size = new Size(154, 22);
+            txtContrasena.Size = new Size(175, 25);
             txtContrasena.TabIndex = 4;
             // 
             // toolStrip1
@@ -89,7 +89,7 @@
             toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripLabel1 });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(800, 35);
+            toolStrip1.Size = new Size(669, 35);
             toolStrip1.TabIndex = 32;
             toolStrip1.Text = "toolStrip1";
             // 
@@ -106,7 +106,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Arial", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.ForeColor = Color.Navy;
-            label3.Location = new Point(301, 62);
+            label3.Location = new Point(276, 62);
             label3.Name = "label3";
             label3.Size = new Size(194, 32);
             label3.TabIndex = 33;
@@ -114,9 +114,9 @@
             // 
             // LoginForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 16F);
+            AutoScaleDimensions = new SizeF(8F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 480);
+            ClientSize = new Size(669, 381);
             Controls.Add(label3);
             Controls.Add(toolStrip1);
             Controls.Add(txtContrasena);
@@ -124,7 +124,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(btnLogin);
-            Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Font = new Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Name = "LoginForm";
             Text = "LoginForm";
             toolStrip1.ResumeLayout(false);

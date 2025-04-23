@@ -8,23 +8,23 @@ using Modelo;
 
 namespace Logica
 {
-    internal class FacturaController
+    public class FacturaController
     {
-        private BaseDatos baseDatos;
+        private BaseDatos bd;
 
         public FacturaController()
         {
-            baseDatos = new BaseDatos();
+            bd = new BaseDatos();
         }
 
         public int CrearFactura(int idVentas, string metodoPago, string direccionEntrega)
         {
-            return baseDatos.GuardarFactura(idVentas, metodoPago, direccionEntrega);
+            return bd.GuardarFactura(idVentas, metodoPago, direccionEntrega);
         }
 
         public List<FacturaEntity> ObtenerFacturas()
         {
-            return baseDatos.TraerFacturas();
+            return bd.TraerFacturas();
         }
     }
 }

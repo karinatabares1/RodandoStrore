@@ -115,6 +115,10 @@ namespace Principal
             }
         }
 
-       
+        private void btnCompras_Click(object sender, EventArgs e)
+        {
+            FormCompra formCompra = new FormCompra();
+            formCompra.Show();
+        }
     }
 }

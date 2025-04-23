@@ -27,5 +27,17 @@ namespace Logica
         {
             return db.TraerVentas().Where(v => v.Id_usuario == idUsuario).ToList();
         }
+
+        // Eliminar una venta por ID
+        public int EliminarVenta(int idVenta)
+        {
+            return db.EliminarVenta(idVenta);
+        }
+
+        // Actualizar una venta
+        public int ActualizarVenta(int idVenta, DateTime fecha, decimal total)
+        {
+            return db.ActualizarVenta(idVenta, fecha,total);
+        }
     }
 }

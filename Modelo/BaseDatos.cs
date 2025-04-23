@@ -81,8 +81,36 @@ namespace Modelo
             }
         }
 
+
+        // Métodos para Rol
+
+        // Método para obtener los roles correctamente
+        public Dictionary<int, string> ObtenerRoles()
+        {
+            Dictionary<int, string> roles = new Dictionary<int, string>();
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                // Corrige el nombre de la tabla y la columna
+                string query = "SELECT id_rol, nombre FROM rol";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        roles.Add(reader.GetInt32("id_rol"), reader.GetString("nombre"));
+                    }
+                }
+            }
+            return roles;
+        }
+
         // Métodos de Producto
 
+
+        // Método para obtener todos los productos
         public List<ProductoEntity> TraerProductos()
         {
             List<ProductoEntity> listaProductos = new List<ProductoEntity>();
@@ -111,6 +139,7 @@ namespace Modelo
             return listaProductos;
         }
 
+        // Método para guardar un producto
         public int GuardarProducto(string nombre, string descripcion, string imagenUrl, int existencia, decimal precio)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -128,6 +157,60 @@ namespace Modelo
                 }
             }
         }
+
+        public int ActualizarProducto(int idProducto, string nombre, string descripcion, string imagenUrl, int existencia, decimal precio)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "UPDATE producto SET nombre = @nombre, descripcion = @descripcion, imagen_url = @imagenUrl, existencia = @existencia, precio = @precio WHERE id_producto = @idProducto";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@nombre", nombre);
+                    cmd.Parameters.AddWithValue("@descripcion", descripcion);
+                    cmd.Parameters.AddWithValue("@imagenUrl", imagenUrl);
+                    cmd.Parameters.AddWithValue("@existencia", existencia);
+                    cmd.Parameters.AddWithValue("@precio", precio);
+                    cmd.Parameters.AddWithValue("@idProducto", idProducto);
+                    return cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // Agregar Imagen de Producto
+        // Agregar Imagen de Producto (actualizado para usar ID)
+        public int ActualizarImagenProducto(int idProducto, byte[] imagen)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "UPDATE producto SET imagen = @imagen WHERE id_producto = @idProducto";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@imagen", imagen);
+                    cmd.Parameters.AddWithValue("@idProducto", idProducto);
+                    return cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
+
+        // Método para eliminar un producto por ID
+        public int EliminarProducto(int idProducto)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "DELETE FROM producto WHERE id_producto = @idProducto";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@idProducto", idProducto);
+                    return cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
 
         // Métodos de Venta
 
@@ -184,6 +267,22 @@ namespace Modelo
             }
         }
 
+        public int ActualizarVenta(int idVenta, DateTime fecha, decimal total)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "UPDATE ventas SET fecha = @fecha, total = @total WHERE id_ventas = @idVenta";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@fecha", fecha);
+                    cmd.Parameters.AddWithValue("@total", total);
+                    cmd.Parameters.AddWithValue("@idVenta", idVenta);
+                    return cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public int EliminarVenta(int idVenta)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -197,6 +296,8 @@ namespace Modelo
                 }
             }
         }
+
+
 
         // Métodos de Detalle de Venta
 
@@ -250,6 +351,24 @@ namespace Modelo
             return lista;
         }
 
+        public int ActualizarDetalleVenta(int idVenta, int idProducto, int cantidad, decimal subtotal)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "UPDATE detalle_ventas SET cantidad = @cantidad, subtotal = @subtotal WHERE id_ventas = @idVenta AND id_producto = @idProducto";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@cantidad", cantidad);
+                    cmd.Parameters.AddWithValue("@subtotal", subtotal);
+                    cmd.Parameters.AddWithValue("@idVenta", idVenta);
+                    cmd.Parameters.AddWithValue("@idProducto", idProducto);
+                    return cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
         public int EliminarDetalleVenta(int idDetalleVenta)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -266,6 +385,7 @@ namespace Modelo
 
         // Métodos de Proveedor
 
+        // Método para obtener todos los proveedores (sin id_producto)
         public List<ProveedorEntity> TraerProveedores()
         {
             List<ProveedorEntity> listaProveedores = new List<ProveedorEntity>();
@@ -293,12 +413,13 @@ namespace Modelo
             return listaProveedores;
         }
 
+        // Método para guardar un proveedor (sin id_producto)
         public int GuardarProveedor(string nombre, string telefono, string direccion, DateTime fecha)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "INSERT INTO proveedor (nombre, telefono, direccion, fecha_registro) VALUES (@nombre, @telefono, @direccion, @fecha)";
+                string query = "INSERT INTO proveedor (nombre, telefono, direccion) VALUES (@nombre, @telefono, @direccion, @fecha)";
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@nombre", nombre);
@@ -310,6 +431,40 @@ namespace Modelo
             }
         }
 
+        // Método para actualizar un proveedor (sin id_producto)
+        public int ActualizarProveedor(int idProveedor, string nombre, string telefono, string direccion, DateTime fecha)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "UPDATE proveedor SET nombre = @nombre, telefono = @telefono, direccion = @direccion, fecha = @fecha WHERE id_proveedor = @idProveedor";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@nombre", nombre);
+                    cmd.Parameters.AddWithValue("@telefono", telefono);
+                    cmd.Parameters.AddWithValue("@direccion", direccion);
+                    cmd.Parameters.AddWithValue("@idProveedor", idProveedor);
+                    return cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // Método para eliminar un proveedor
+        public int EliminarProveedor(int idProveedor)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "DELETE FROM proveedor WHERE id_proveedor = @idProveedor";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@idProveedor", idProveedor);
+                    return cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // Método para asignar un producto a un proveedor en la tabla intermedia proveedor_producto
         public int AsignarProductoProveedor(int idProveedor, int idProducto)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -324,5 +479,53 @@ namespace Modelo
                 }
             }
         }
+
+
+        // Metodos de Factura
+        public int GuardarFactura(int idVentas, string metodoPago, string direccionEntrega)
+        {
+            int filasAfectadas = 0;
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "INSERT INTO factura (id_ventas, metodo_pago, direccion_entrega) VALUES (@idVentas, @metodoPago, @direccionEntrega)";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@idVentas", idVentas);
+                cmd.Parameters.AddWithValue("@metodoPago", metodoPago);
+                cmd.Parameters.AddWithValue("@direccionEntrega", direccionEntrega);
+                filasAfectadas = cmd.ExecuteNonQuery();
+            }
+
+            return filasAfectadas;
+        }
+
+        public List<FacturaEntity> TraerFacturas()
+        {
+            List<FacturaEntity> lista = new List<FacturaEntity>();
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT * FROM factura";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    FacturaEntity f = new FacturaEntity();
+                    f.Id_factura = reader.GetInt32("id_factura");
+                    f.Id_ventas = reader.GetInt32("id_ventas");
+                    f.Fecha_emision = reader.GetDateTime("fecha_emision");
+                    f.Metodo_pago = reader.GetString("metodo_pago");
+                    f.Direccion_entrega = reader.GetString("direccion_entrega");
+
+                    lista.Add(f);
+                }
+            }
+
+            return lista;
+        }
+
     }
 }

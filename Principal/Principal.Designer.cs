@@ -46,6 +46,7 @@
             acercaDeToolStripMenuItem = new ToolStripMenuItem();
             btnLogin = new Button();
             btnRegistrarse = new Button();
+            btnCompras = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -145,14 +146,14 @@
             // registrarVentaToolStripMenuItem
             // 
             registrarVentaToolStripMenuItem.Name = "registrarVentaToolStripMenuItem";
-            registrarVentaToolStripMenuItem.Size = new Size(180, 22);
+            registrarVentaToolStripMenuItem.Size = new Size(163, 22);
             registrarVentaToolStripMenuItem.Text = "Registrar Venta";
             registrarVentaToolStripMenuItem.Click += registrarVentaToolStripMenuItem_Click_1;
             // 
             // verVentasToolStripMenuItem
             // 
             verVentasToolStripMenuItem.Name = "verVentasToolStripMenuItem";
-            verVentasToolStripMenuItem.Size = new Size(180, 22);
+            verVentasToolStripMenuItem.Size = new Size(163, 22);
             verVentasToolStripMenuItem.Text = "Ver Ventas";
             verVentasToolStripMenuItem.Click += verVentasToolStripMenuItem_Click_1;
             // 
@@ -166,7 +167,7 @@
             // acercaDeToolStripMenuItem
             // 
             acercaDeToolStripMenuItem.Name = "acercaDeToolStripMenuItem";
-            acercaDeToolStripMenuItem.Size = new Size(127, 22);
+            acercaDeToolStripMenuItem.Size = new Size(180, 22);
             acercaDeToolStripMenuItem.Text = "Acerca De";
             acercaDeToolStripMenuItem.Click += acercaDeToolStripMenuItem_Click;
             // 
@@ -175,7 +176,7 @@
             btnLogin.BackColor = Color.Navy;
             btnLogin.Font = new Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnLogin.ForeColor = SystemColors.Control;
-            btnLogin.Location = new Point(536, 27);
+            btnLogin.Location = new Point(426, 26);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(112, 44);
             btnLogin.TabIndex = 5;
@@ -188,7 +189,7 @@
             btnRegistrarse.BackColor = Color.Navy;
             btnRegistrarse.Font = new Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnRegistrarse.ForeColor = SystemColors.Control;
-            btnRegistrarse.Location = new Point(654, 27);
+            btnRegistrarse.Location = new Point(544, 26);
             btnRegistrarse.Name = "btnRegistrarse";
             btnRegistrarse.Size = new Size(105, 44);
             btnRegistrarse.TabIndex = 6;
@@ -196,11 +197,25 @@
             btnRegistrarse.UseVisualStyleBackColor = false;
             btnRegistrarse.Click += btnRegistrarse_Click;
             // 
+            // btnCompras
+            // 
+            btnCompras.BackColor = Color.DarkTurquoise;
+            btnCompras.Font = new Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnCompras.ForeColor = SystemColors.ActiveCaptionText;
+            btnCompras.Location = new Point(655, 27);
+            btnCompras.Name = "btnCompras";
+            btnCompras.Size = new Size(105, 44);
+            btnCompras.TabIndex = 7;
+            btnCompras.Text = "Compras";
+            btnCompras.UseVisualStyleBackColor = false;
+            btnCompras.Click += btnCompras_Click;
+            // 
             // Principal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnCompras);
             Controls.Add(btnRegistrarse);
             Controls.Add(btnLogin);
             Controls.Add(pictureBox1);
@@ -235,5 +250,6 @@
         private ToolStripMenuItem verVentasToolStripMenuItem;
         private Button btnLogin;
         private Button btnRegistrarse;
+        private Button btnCompras;
     }
 }

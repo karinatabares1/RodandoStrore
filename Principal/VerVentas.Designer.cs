@@ -39,6 +39,7 @@
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
+            dtpFechaVenta = new DateTimePicker();
             toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvVentas).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvDetallesVenta).BeginInit();
@@ -120,6 +121,7 @@
             btnActualizarVenta.TabIndex = 79;
             btnActualizarVenta.Text = "Actualizar Venta";
             btnActualizarVenta.UseVisualStyleBackColor = false;
+            btnActualizarVenta.Click += btnActualizarVenta_Click;
             // 
             // dgvDetallesVenta
             // 
@@ -159,11 +161,19 @@
             label4.TabIndex = 83;
             label4.Text = "Detalle De Venta";
             // 
+            // dtpFechaVenta
+            // 
+            dtpFechaVenta.Location = new Point(274, 429);
+            dtpFechaVenta.Name = "dtpFechaVenta";
+            dtpFechaVenta.Size = new Size(236, 23);
+            dtpFechaVenta.TabIndex = 84;
+            // 
             // VerVentas
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 649);
+            Controls.Add(dtpFechaVenta);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -197,5 +207,6 @@
         private Label label2;
         private Label label3;
         private Label label4;
+        private DateTimePicker dtpFechaVenta;
     }
 }
