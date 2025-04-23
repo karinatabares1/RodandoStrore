@@ -58,7 +58,7 @@ namespace Principal
                 CargarDetallesVenta(idVenta);
             }
         }
-        private void btnVerDetalles_Click(object sender, EventArgs e)
+        private void btnVerDetalles_Click_1(object sender, EventArgs e)
         {
             if (dgvVentas.SelectedRows.Count > 0)
             {
@@ -96,19 +96,40 @@ namespace Principal
             }
         }
 
-        private void btnEliminarVenta_Click(object sender, EventArgs e)
+        private void btnEliminarVenta_Click_1(object sender, EventArgs e)
         {
             if (dgvVentas.SelectedRows.Count > 0)
             {
                 int idVenta = Convert.ToInt32(dgvVentas.SelectedRows[0].Cells[0].Value);
-                if (MessageBox.Show("¿Deseas eliminar esta venta?", "Confirmación", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    BaseDatos db = new BaseDatos();
-                    db.EliminarVenta(idVenta);  // Debes tener este método en BaseDatos
 
-                    MessageBox.Show("Venta eliminada correctamente.");
-                    CargarVentas();
-                    dgvDetallesVenta.DataSource = null;
+                DialogResult resultado = MessageBox.Show("¿Deseas eliminar esta venta?", "Confirmación", MessageBoxButtons.YesNo);
+                if (resultado == DialogResult.Yes)
+                {
+                    // Crear instancia del controller de detalles
+                    DetalleVentasController detalleController = new DetalleVentasController();
+
+                    // Traer los detalles de la venta seleccionada
+                    var detalles = detalleController.TraerDetalles(idVenta);
+
+                    // Eliminar todos los detalles de la venta
+                    foreach (var detalle in detalles)
+                    {
+                        detalleController.EliminarDetalleVenta(detalle.Id_detalle_venta);
+                    }
+
+                    // Ahora eliminar la venta
+                    int filasAfectadas = ventasController.EliminarVenta(idVenta);
+
+                    if (filasAfectadas > 0)
+                    {
+                        MessageBox.Show("Venta eliminada correctamente.");
+                        CargarVentas(); // Recargar la lista de ventas
+                        dgvDetallesVenta.DataSource = null; // Limpiar detalles
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo eliminar la venta.");
+                    }
                 }
             }
             else
@@ -117,10 +138,71 @@ namespace Principal
             }
         }
 
+        private void btnActualizarVenta_Click(object sender, EventArgs e)
+        {
+            if (dgvVentas.SelectedRows.Count > 0)
+            {
+                int idVenta = Convert.ToInt32(dgvVentas.SelectedRows[0].Cells[0].Value);
+                DateTime nuevaFecha = dtpFechaVenta.Value;
+
+                // Calcular el nuevo total desde los subtotales del dgvDetallesVenta
+                decimal nuevoTotal = 0;
+
+                foreach (DataGridViewRow fila in dgvDetallesVenta.Rows)
+                {
+                    if (fila.Cells["subtotal"].Value != null)
+                    {
+                        decimal subtotal;
+                        if (decimal.TryParse(fila.Cells["subtotal"].Value.ToString(), out subtotal))
+                        {
+                            nuevoTotal += subtotal;
+                        }
+                    }
+                }
+
+                int filasAfectadas = ventasController.ActualizarVenta(idVenta, nuevaFecha, nuevoTotal);
+
+                if (filasAfectadas > 0)
+                {
+                    // Actualizar detalles de venta
+                    DetalleVentasController detalleController = new DetalleVentasController();
+
+                    foreach (DataGridViewRow fila in dgvDetallesVenta.Rows)
+                    {
+                        if (fila.Cells["id_producto"].Value != null &&
+                            fila.Cells["cantidad"].Value != null &&
+                            fila.Cells["subtotal"].Value != null)
+                        {
+                            int idProducto = Convert.ToInt32(fila.Cells["id_producto"].Value);
+                            int cantidad = Convert.ToInt32(fila.Cells["cantidad"].Value);
+                            decimal subtotal = Convert.ToDecimal(fila.Cells["subtotal"].Value);
+
+                            detalleController.ActualizarDetalleVenta(idVenta, idProducto, cantidad, subtotal);
+                        }
+                    }
+
+                    MessageBox.Show("Venta actualizada correctamente.");
+                    CargarVentas();
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo actualizar la venta.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Selecciona una venta para actualizar.");
+            }
+
+        }
+
+
+
         private void VerVentas_Load(object sender, EventArgs e)
         {
             CargarVentas();
         }
 
+        
     }
 }

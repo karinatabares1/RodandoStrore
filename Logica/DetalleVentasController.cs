@@ -19,5 +19,17 @@ namespace Logica
         {
             return db.TraerDetalleVentas(idVenta);
         }
+
+        // Actualizar un detalle de venta existente
+        public int ActualizarDetalleVenta(int idVenta, int idProducto, int cantidad, decimal subtotal)
+        {
+            return db.ActualizarDetalleVenta(idVenta, idProducto, cantidad, subtotal);
+        }
+
+        // Eliminar un detalle de venta específico (opcional, si lo necesitas)
+        public int EliminarDetalleVenta(int idDetalleVenta)
+        {
+            return db.EliminarDetalleVenta(idDetalleVenta);
+        }
     }
 }

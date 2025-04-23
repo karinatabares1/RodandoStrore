@@ -8,7 +8,7 @@ using Modelo;
 
 namespace Logica
 {
-    internal class FacturaController
+    public class FacturaController
     {
         private BaseDatos baseDatos;
 
